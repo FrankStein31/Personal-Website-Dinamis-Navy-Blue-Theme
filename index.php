@@ -433,7 +433,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
         /* Card — industrial dark architecture */
         .timeline-bubble {
             width: 43%;
-            background: var(--bg-card);
+            background: var(--card-bg);
             border: 1px solid var(--border-steel);
             border-radius: 12px;
             padding: 32px 36px;
@@ -667,7 +667,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
         }
 
         .portfolio-neon-card {
-            background: var(--bg-card);
+            background: var(--card-bg);
             border: 1px solid var(--border-steel);
             border-radius: 14px;
             overflow: hidden;
@@ -855,14 +855,8 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
         .modal-main-viewport iframe { width:100%; height:58vh; border:none; border-radius:10px; }
 
         /* Project split-pane */
-        .modal-split-layout {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            flex-grow: 1;
-            overflow: hidden;
-            background-color: #050D18;
-        }
-        .modal-gallery-pane { position: relative; background: #030A16; min-height: 380px; }
+        .modal-split-layout { display: flex; flex-direction: column; flex-grow: 1; overflow-y: auto; background-color: #050D18; max-height: 75vh; }
+        .modal-gallery-pane { position: relative; background: #030A16; min-height: 450px; width: 100%; flex-shrink: 0; }
         .modal-swiper { width:100%; height:100%; position:absolute; }
         .modal-swiper .swiper-slide { display:flex; align-items:center; justify-content:center; }
         .modal-swiper .swiper-slide img { width:100%; height:100%; object-fit:contain; }
@@ -873,15 +867,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
         }
         .modal-swiper .swiper-button-next::after, .modal-swiper .swiper-button-prev::after { font-size:11px; }
 
-        .modal-text-pane {
-            padding: 32px;
-            display: flex; flex-direction: column;
-            background: var(--bg-card);
-            border-left: 1px solid var(--border-steel);
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--border-steel) transparent;
-        }
+        .modal-text-pane { padding: 32px; display: flex; flex-direction: column; background: var(--card-bg); border-top: 1px solid var(--border-steel); }
         .modal-text-pane::-webkit-scrollbar { width: 4px; }
         .modal-text-pane::-webkit-scrollbar-track { background: transparent; }
         .modal-text-pane::-webkit-scrollbar-thumb { background: var(--border-steel); border-radius: 4px; }
@@ -996,9 +982,9 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
             
             .cert-glass-card { flex: 0 0 100%; }
 
-            .modal-split-layout { grid-template-columns: 1fr; max-height: 60vh; overflow-y: auto; }
-            .modal-gallery-pane { height: 240px; min-height: 240px; }
-            .modal-text-pane { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.06); padding: 25px; }
+            .modal-split-layout { display: flex; flex-direction: column; flex-grow: 1; overflow-y: auto; background-color: #050D18; max-height: 75vh; }
+            .modal-gallery-pane { position: relative; background: #030A16; min-height: 450px; width: 100%; flex-shrink: 0; }
+            .modal-text-pane { padding: 32px; display: flex; flex-direction: column; background: var(--card-bg); border-top: 1px solid var(--border-steel); }
         }
 
         @media (max-width: 480px) {
@@ -1378,7 +1364,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
             }
             
             mOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; document.body.style.paddingRight = (window.innerWidth - document.documentElement.clientWidth) + 'px';
             
             setTimeout(() => {
                 if (currentModalSwiper) currentModalSwiper.destroy(true, true);
@@ -1392,7 +1378,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
 
         function hideProjectModal() {
             document.getElementById('projectModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = 'auto'; document.body.style.paddingRight = '0px';
             if (currentModalSwiper) {
                 currentModalSwiper.destroy(true, true);
                 currentModalSwiper = null;
@@ -1416,12 +1402,12 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
                 body.innerHTML = `<p style="color:var(--text-muted)">Preview format error.</p>`;
             }
             document.getElementById('documentModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; document.body.style.paddingRight = (window.innerWidth - document.documentElement.clientWidth) + 'px';
         }
 
         function hideDocModal() {
             document.getElementById('documentModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = 'auto'; document.body.style.paddingRight = '0px';
             setTimeout(() => { document.getElementById('modalDocBody').innerHTML = ''; }, 400);
         }
 

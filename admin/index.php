@@ -44,14 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     <style>
         :root {
-            --primary: #2F6E9B; /* Medium steel blue from color palette */
-            --primary-hover: #0F2E57; /* Dark navy blue from color palette */
-            --dark: #06162B; /* Deep dark navy from color palette */
-            --light-bg: #F4FBFF; /* Very light ivory/blue-white from color palette */
-            --card-bg: rgba(6, 22, 43, 0.85); /* Deep dark navy translucent card */
-            --border: rgba(168, 212, 234, 0.2); /* Light ice blue border */
-            --text-main: #F4FBFF;
-            --text-muted: #A8D4EA;
+            --primary: #1F4E6B; /* Matte Steel Blue */
+            --primary-hover: #9FB8C9; /* Light Slate Blue */
+            --bg-deep: #081A2E; /* Deepest Cinema Shadow */
+            --card-bg: rgba(14, 42, 71, 0.85); /* Studio Room Grid */
+            --border: rgba(31, 78, 107, 0.5); /* Steel Border */
+            --text-main: #F2F5F7; /* Crisp Ice White */
+            --text-muted: #9FB8C9;
             --danger: #EF4444;
             --radius-md: 12px;
             --radius-lg: 20px;
@@ -67,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         body {
             font-family: var(--font-body);
-            background: linear-gradient(135deg, #06162B 0%, #0F2E57 50%, #2F6E9B 100%);
+            background: linear-gradient(135deg, var(--bg-deep) 0%, #0E2A47 50%, var(--bg-deep) 100%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -84,10 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(168, 212, 234, 0.2) 0%, rgba(6, 22, 43, 0.2) 100%);
-            top: -100px;
-            right: -100px;
-            filter: blur(50px);
+            background: radial-gradient(circle, rgba(31, 78, 107, 0.4) 0%, rgba(8, 26, 46, 0) 70%);
+            top: -50px;
+            right: -50px;
             z-index: 1;
         }
 
@@ -96,10 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 400px;
             height: 400px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(168, 212, 234, 0.1) 0%, rgba(6, 22, 43, 0.1) 100%);
-            bottom: -150px;
-            left: -150px;
-            filter: blur(80px);
+            background: radial-gradient(circle, rgba(31, 78, 107, 0.3) 0%, rgba(8, 26, 46, 0) 70%);
+            bottom: -100px;
+            left: -100px;
             z-index: 1;
         }
 
@@ -110,8 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             padding: 45px 40px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
             position: relative;
             z-index: 10;
         }
@@ -124,22 +121,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .logo-icon {
             width: 60px;
             height: 60px;
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(242, 245, 247, 0.05);
             border-radius: 50%;
-            color: var(--primary);
+            color: var(--primary-hover);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
             margin: 0 auto 20px auto;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         .login-header h1 {
             font-family: var(--font-heading);
             font-size: 1.85rem;
-            color: var(--dark);
+            color: var(--text-main);
             font-weight: 700;
             margin-bottom: 8px;
         }
@@ -150,9 +147,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .alert-error {
-            background-color: #FFF0F0;
+            background-color: rgba(239, 68, 68, 0.1);
             color: var(--danger);
-            border: 1px solid #FCD4D4;
+            border: 1px solid rgba(239, 68, 68, 0.3);
             padding: 12px 16px;
             border-radius: var(--radius-md);
             margin-bottom: 24px;
@@ -171,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: block;
             font-size: 0.85rem;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--text-muted);
             margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -198,16 +195,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 0.95rem;
             border: 1.5px solid var(--border);
             border-radius: var(--radius-md);
-            background-color: rgba(250, 246, 246, 0.5);
-            color: var(--dark);
+            background-color: rgba(8, 26, 46, 0.6);
+            color: var(--text-main);
             transition: all 0.3s ease;
         }
 
         .form-control:focus {
             outline: none;
-            border-color: var(--primary);
-            background-color: #FFFFFF;
-            box-shadow: 0 0 0 4px rgba(183, 110, 121, 0.1);
+            border-color: var(--primary-hover);
+            background-color: rgba(8, 26, 46, 0.9);
+            box-shadow: 0 0 0 4px rgba(159, 184, 201, 0.1);
         }
 
         .form-control:focus + .input-icon {

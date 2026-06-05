@@ -433,7 +433,7 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
         /* Card — industrial dark architecture */
         .timeline-bubble {
             width: 43%;
-            background: var(--bg-card);
+            background: var(--card-bg);
             border: 1px solid var(--border-steel);
             border-radius: 12px;
             padding: 32px 36px;
@@ -667,7 +667,7 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
         }
 
         .portfolio-neon-card {
-            background: var(--bg-card);
+            background: var(--card-bg);
             border: 1px solid var(--border-steel);
             border-radius: 14px;
             overflow: hidden;
@@ -731,7 +731,6 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
         .btn-internal-primary {
             background: var(--text-main); color: var(--bg-deep); border: none;
         }
-}
 
         .btn-internal-primary:hover {
             background: var(--text-muted);
@@ -763,6 +762,10 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
             transform: translateY(-3px);
         }
         .portfolio-cta { text-align: center; }
+        .back-btn-container { display: flex; justify-content: flex-start; margin-bottom: 30px; }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); text-decoration: none; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease; padding: 10px 20px; border: 1px solid var(--border-steel); border-radius: 8px; }
+        .btn-back:hover { color: var(--text-main); border-color: var(--text-main); transform: translateX(-5px); background: rgba(31,78,107,0.1); }
+
 
         /* ── PREMIUM VIDEO PLAYER MODAL ── */
         .modal-overlay {
@@ -857,14 +860,8 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
         .modal-main-viewport iframe { width:100%; height:58vh; border:none; border-radius:10px; }
 
         /* Project split-pane */
-        .modal-split-layout {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            flex-grow: 1;
-            overflow: hidden;
-            background-color: #050D18;
-        }
-        .modal-gallery-pane { position: relative; background: #030A16; min-height: 380px; }
+        .modal-split-layout { display: flex; flex-direction: column; flex-grow: 1; overflow-y: auto; background-color: #050D18; max-height: 75vh; }
+        .modal-gallery-pane { position: relative; background: #030A16; min-height: 450px; width: 100%; flex-shrink: 0; }
         .modal-swiper { width:100%; height:100%; position:absolute; }
         .modal-swiper .swiper-slide { display:flex; align-items:center; justify-content:center; }
         .modal-swiper .swiper-slide img { width:100%; height:100%; object-fit:contain; }
@@ -875,15 +872,7 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
         }
         .modal-swiper .swiper-button-next::after, .modal-swiper .swiper-button-prev::after { font-size:11px; }
 
-        .modal-text-pane {
-            padding: 32px;
-            display: flex; flex-direction: column;
-            background: var(--bg-card);
-            border-left: 1px solid var(--border-steel);
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--border-steel) transparent;
-        }
+        .modal-text-pane { padding: 32px; display: flex; flex-direction: column; background: var(--card-bg); border-top: 1px solid var(--border-steel); }
         .modal-text-pane::-webkit-scrollbar { width: 4px; }
         .modal-text-pane::-webkit-scrollbar-track { background: transparent; }
         .modal-text-pane::-webkit-scrollbar-thumb { background: var(--border-steel); border-radius: 4px; }
@@ -998,9 +987,9 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
             
             .cert-glass-card { flex: 0 0 100%; }
 
-            .modal-split-layout { grid-template-columns: 1fr; max-height: 60vh; overflow-y: auto; }
-            .modal-gallery-pane { height: 240px; min-height: 240px; }
-            .modal-text-pane { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.06); padding: 25px; }
+            .modal-split-layout { display: flex; flex-direction: column; flex-grow: 1; overflow-y: auto; background-color: #050D18; max-height: 75vh; }
+            .modal-gallery-pane { position: relative; background: #030A16; min-height: 450px; width: 100%; flex-shrink: 0; }
+            .modal-text-pane { padding: 32px; display: flex; flex-direction: column; background: var(--card-bg); border-top: 1px solid var(--border-steel); }
 display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1052,14 +1041,8 @@ display: flex;
         .modal-main-viewport iframe { width:100%; height:58vh; border:none; border-radius:10px; }
 
         /* Project split-pane */
-        .modal-split-layout {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            flex-grow: 1;
-            overflow: hidden;
-            background-color: #050D18;
-        }
-        .modal-gallery-pane { position: relative; background: #030A16; min-height: 380px; }
+        .modal-split-layout { display: flex; flex-direction: column; flex-grow: 1; overflow-y: auto; background-color: #050D18; max-height: 75vh; }
+        .modal-gallery-pane { position: relative; background: #030A16; min-height: 450px; width: 100%; flex-shrink: 0; }
         .modal-swiper { width:100%; height:100%; position:absolute; }
         .modal-swiper .swiper-slide { display:flex; align-items:center; justify-content:center; }
         .modal-swiper .swiper-slide img { width:100%; height:100%; object-fit:contain; }
@@ -1070,15 +1053,7 @@ display: flex;
         }
         .modal-swiper .swiper-button-next::after, .modal-swiper .swiper-button-prev::after { font-size:11px; }
 
-        .modal-text-pane {
-            padding: 32px;
-            display: flex; flex-direction: column;
-            background: var(--bg-card);
-            border-left: 1px solid var(--border-steel);
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--border-steel) transparent;
-        }
+        .modal-text-pane { padding: 32px; display: flex; flex-direction: column; background: var(--card-bg); border-top: 1px solid var(--border-steel); }
         .modal-text-pane::-webkit-scrollbar { width: 4px; }
         .modal-text-pane::-webkit-scrollbar-track { background: transparent; }
         .modal-text-pane::-webkit-scrollbar-thumb { background: var(--border-steel); border-radius: 4px; }
@@ -1193,9 +1168,9 @@ display: flex;
             
             .cert-glass-card { flex: 0 0 100%; }
 
-            .modal-split-layout { grid-template-columns: 1fr; max-height: 60vh; overflow-y: auto; }
-            .modal-gallery-pane { height: 240px; min-height: 240px; }
-            .modal-text-pane { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.06); padding: 25px; }
+            .modal-split-layout { display: flex; flex-direction: column; flex-grow: 1; overflow-y: auto; background-color: #050D18; max-height: 75vh; }
+            .modal-gallery-pane { position: relative; background: #030A16; min-height: 450px; width: 100%; flex-shrink: 0; }
+            .modal-text-pane { padding: 32px; display: flex; flex-direction: column; background: var(--card-bg); border-top: 1px solid var(--border-steel); }
         }
 
         @media (max-width: 480px) {
@@ -1485,7 +1460,7 @@ display: flex;
             
             // Show Modal
             modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; document.body.style.paddingRight = (window.innerWidth - document.documentElement.clientWidth) + 'px';
             
             // Initialize Swiper
             setTimeout(() => {
@@ -1509,7 +1484,7 @@ display: flex;
         function hideProjectModal() {
             const modal = document.getElementById('projectModal');
             modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = 'auto'; document.body.style.paddingRight = '0px';
             if (modalSwiper) {
                 modalSwiper.destroy(true, true);
                 modalSwiper = null;
@@ -1554,13 +1529,13 @@ display: flex;
             
             bodyElem.innerHTML = contentHtml;
             modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Disable scroll under modal
+            document.body.style.overflow = 'hidden'; document.body.style.paddingRight = (window.innerWidth - document.documentElement.clientWidth) + 'px'; // Disable scroll under modal
         }
 
         function hideDocModal() {
             const modal = document.getElementById('documentModal');
             modal.classList.remove('active');
-            document.body.style.overflow = 'auto'; // Enable scroll
+            document.body.style.overflow = 'auto'; document.body.style.paddingRight = '0px'; // Enable scroll
             
             // Clear content after animation
             setTimeout(() => {
@@ -1579,6 +1554,24 @@ display: flex;
             if (event.key === 'Escape') {
                 hideDocModal();
             }
+        });
+
+        // Mobile Nav Drawer Viewport Interactions
+        function toggleMobileNav() {
+            const links = document.querySelector('.nav-links');
+            const icon = document.querySelector('.mobile-nav-toggle i');
+            links.classList.toggle('active');
+            icon.className = links.classList.contains('active') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(a => {
+            a.addEventListener('click', () => {
+                const links = document.querySelector('.nav-links');
+                if (links.classList.contains('active')) {
+                    links.classList.remove('active');
+                    document.querySelector('.mobile-nav-toggle i').className = 'fa-solid fa-bars';
+                }
+            });
         });
     </script>
 </body>
