@@ -1262,7 +1262,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
                 <span><?= !empty($name) ? htmlspecialchars($name) : 'Website' ?></span>
             </a>
             <p>&copy; <?= date('Y') ?> <?= htmlspecialchars($name) ?>. All Rights Reserved.</p>
-            <p style="font-size: 0.75rem; opacity: 0.4;"><a href="admin/index.php">Terminal Auth Login</a></p>
+            <p style="font-size: 0.75rem; opacity: 0.4;"><a href="admin/index.php">Administrator Panel</a></p>
         </div>
     </footer>
 
@@ -1378,7 +1378,8 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
 
         function hideProjectModal() {
             document.getElementById('projectModal').classList.remove('active');
-            document.body.style.overflow = 'auto'; document.body.style.paddingRight = '0px';
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
             if (currentModalSwiper) {
                 currentModalSwiper.destroy(true, true);
                 currentModalSwiper = null;
@@ -1407,7 +1408,8 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
 
         function hideDocModal() {
             document.getElementById('documentModal').classList.remove('active');
-            document.body.style.overflow = 'auto'; document.body.style.paddingRight = '0px';
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
             setTimeout(() => { document.getElementById('modalDocBody').innerHTML = ''; }, 400);
         }
 

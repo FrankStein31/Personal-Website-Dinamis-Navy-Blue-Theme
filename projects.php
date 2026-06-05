@@ -990,187 +990,6 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
             .modal-split-layout { display: flex; flex-direction: column; flex-grow: 1; overflow-y: auto; background-color: #050D18; max-height: 75vh; }
             .modal-gallery-pane { position: relative; background: #030A16; min-height: 450px; width: 100%; flex-shrink: 0; }
             .modal-text-pane { padding: 32px; display: flex; flex-direction: column; background: var(--card-bg); border-top: 1px solid var(--border-steel); }
-display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title-group h3 {
-            font-family: var(--font-heading);
-            font-size: 1.3rem;
-            color: var(--text-main);
-            font-weight: 700;
-        }
-
-        .modal-title-group p {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 2px;
-        }
-
-        .modal-close-trigger {
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-close-trigger:hover {
-            background: rgba(31,78,107,0.4);
-            color: var(--text-main);
-        }
-
-        .modal-main-viewport {
-            padding: 24px;
-            overflow-y: auto;
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #050D18;
-        }
-        .modal-main-viewport img { max-width:100%; max-height:60vh; border-radius:10px; object-fit:contain; }
-        .modal-main-viewport iframe { width:100%; height:58vh; border:none; border-radius:10px; }
-
-        /* Project split-pane */
-        .modal-split-layout { display: flex; flex-direction: column; flex-grow: 1; overflow-y: auto; background-color: #050D18; max-height: 75vh; }
-        .modal-gallery-pane { position: relative; background: #030A16; min-height: 450px; width: 100%; flex-shrink: 0; }
-        .modal-swiper { width:100%; height:100%; position:absolute; }
-        .modal-swiper .swiper-slide { display:flex; align-items:center; justify-content:center; }
-        .modal-swiper .swiper-slide img { width:100%; height:100%; object-fit:contain; }
-        .modal-swiper .swiper-slide iframe { width:100%; height:100%; border:none; }
-        .modal-swiper .swiper-button-next, .modal-swiper .swiper-button-prev {
-            color: var(--text-main); background: rgba(8,26,46,0.8);
-            border: 1px solid var(--border-steel); width:34px; height:34px; border-radius:6px;
-        }
-        .modal-swiper .swiper-button-next::after, .modal-swiper .swiper-button-prev::after { font-size:11px; }
-
-        .modal-text-pane { padding: 32px; display: flex; flex-direction: column; background: var(--card-bg); border-top: 1px solid var(--border-steel); }
-        .modal-text-pane::-webkit-scrollbar { width: 4px; }
-        .modal-text-pane::-webkit-scrollbar-track { background: transparent; }
-        .modal-text-pane::-webkit-scrollbar-thumb { background: var(--border-steel); border-radius: 4px; }
-
-        .modal-scrollable-text {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 30px;
-            white-space: pre-wrap;
-        }
-
-        /* Modern Hamburger Toggle Mobile Menu */
-        .mobile-nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.3rem;
-            color: var(--text-main);
-            cursor: pointer;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s;
-            z-index: 1002;
-        }
-
-        .mobile-nav-toggle:hover {
-            background: rgba(0, 242, 254, 0.05);
-            color: var(--accent-cyan);
-        }
-
-        /* Footer System */
-        footer {
-            background-color: #02060f;
-            padding: 70px 0;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        footer .logo { justify-content: center; margin-bottom: 25px; }
-        footer p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px; }
-        footer a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
-        footer a:hover { color: var(--accent-cyan); }
-
-        /* MULTI-DEVICE RESPONSIVE LAYOUT MATRIX */
-        @media (max-width: 991px) {
-            #hero {
-                min-height: auto;
-                padding-top: 140px;
-                padding-bottom: 80px;
-                display: block;
-            }
-            .hero-layout {
-                grid-template-columns: 1fr;
-                gap: 55px;
-                text-align: center;
-            }
-            .hero-badge { align-self: center; }
-            .hero-image-side { order: -1; }
-            .profile-card-wrapper { max-width: 340px; }
-            .hero-text-side h1 { font-size: 2.8rem; }
-            .hero-role-title { justify-content: center; }
-            .hero-role-title::before { display: none; }
-            .social-container { flex-direction: column; gap: 15px; }
-            
-            .floating-pill {
-                padding: 8px 16px;
-                font-size: 0.75rem;
-            }
-            .pill-1 { top: 20px; left: 20px; }
-            .pill-2 { bottom: 20px; right: 20px; }
-
-            .timeline-container::before { left: 30px; }
-            .timeline-pointer { left: 30px; }
-            .timeline-bubble { width: calc(100% - 60px); float: right !important; }
-
-            .cert-glass-card { flex: 0 0 calc((100% - 30px) / 2); }
-        }
-
-        @media (max-width: 768px) {
-            section { padding: 90px 0; }
-            .section-header h2 { font-size: 2rem; }
-            .mobile-nav-toggle { display: flex; }
-            
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: 0;
-                transform: translateX(100%);
-                width: 80%;
-                max-width: 300px;
-                height: 100vh;
-                background-color: rgba(2, 6, 15, 0.98);
-                backdrop-filter: blur(25px);
-                -webkit-backdrop-filter: blur(25px);
-                flex-direction: column;
-                justify-content: center;
-                gap: 35px;
-                padding: 40px;
-                box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
-                transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-                z-index: 1001;
-                border-left: 1px solid var(--glass-border);
-            }
-            .nav-links.active {
-                transform: translateX(0);
-            }
-            
-            .cert-glass-card { flex: 0 0 100%; }
-
-            .modal-split-layout { display: flex; flex-direction: column; flex-grow: 1; overflow-y: auto; background-color: #050D18; max-height: 75vh; }
-            .modal-gallery-pane { position: relative; background: #030A16; min-height: 450px; width: 100%; flex-shrink: 0; }
-            .modal-text-pane { padding: 32px; display: flex; flex-direction: column; background: var(--card-bg); border-top: 1px solid var(--border-steel); }
         }
 
         @media (max-width: 480px) {
@@ -1181,8 +1000,9 @@ display: flex;
             .pill-2 { bottom: 15px; right: 15px; }
             .timeline-bubble { padding: 25px; }
         }
-    </style>
-</head>
+
+        footer .logo { justify-content: center; margin-bottom: 25px; }
+    </style></head>
 <body>
 
     <div class="glow-blob" style="top: -100px; right: -100px;"></div>
@@ -1322,46 +1142,38 @@ display: flex;
     <div class="modal-overlay" id="documentModal" onclick="closeDocModal(event)">
         <div class="modal-box" onclick="event.stopPropagation()">
             <div class="modal-header">
-                <div class="modal-title-container">
-                    <h3 id="modalDocTitle">Document Preview</h3>
-                    <p id="modalDocIssuer">Document Issuer</p>
+                <div class="modal-title-group">
+                    <h3 id="modalDocTitle">Document Object View</h3>
+                    <p id="modalDocIssuer">Verification Guild</p>
                 </div>
-                <button class="modal-close-btn" onclick="hideDocModal()">&times;</button>
+                <button class="modal-close-trigger" onclick="hideDocModal()">&times;</button>
             </div>
-            <div class="modal-body" id="modalDocBody">
-                <!-- Content will be injected dynamically via JS -->
-            </div>
+            <div class="modal-main-viewport" id="modalDocBody"></div>
         </div>
     </div>
 
     <!-- POP-UP MODAL DETAIL PROJECT (FOR PORTFOLIO) -->
     <div class="modal-overlay" id="projectModal" onclick="closeProjectModal(event)">
-        <div class="modal-box" onclick="event.stopPropagation()" style="max-width: 950px;">
+        <div class="modal-box" onclick="event.stopPropagation()" style="max-width: 900px;">
             <div class="modal-header">
-                <div class="modal-title-container">
-                    <h3 id="modalProjTitle">Project Detail</h3>
+                <div class="modal-title-group">
+                    <h3 id="modalProjTitle">Production Ledger</h3>
                 </div>
-                <button class="modal-close-btn" onclick="hideProjectModal()">&times;</button>
+                <button class="modal-close-trigger" onclick="hideProjectModal()">&times;</button>
             </div>
-            <div class="modal-grid-body">
-                <div class="modal-slider-side">
+            <div class="modal-split-layout">
+                <div class="modal-gallery-pane">
                     <div class="swiper modal-swiper">
-                        <div class="swiper-wrapper" id="modalSwiperWrapper">
-                            <!-- Swiper slides injected here -->
-                        </div>
+                        <div class="swiper-wrapper" id="modalSwiperWrapper"></div>
                         <div class="swiper-pagination"></div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
                     </div>
                 </div>
-                <div class="modal-desc-side">
-                    <h4 style="font-family: var(--font-heading); color: var(--text-dark); font-size: 1.3rem; margin-bottom: 12px;" id="modalProjTitleDetail">Project Title</h4>
-                    <div class="modal-scroll-desc" id="modalProjDesc">
-                        <!-- Project description here -->
-                    </div>
-                    <div class="modal-proj-action" id="modalProjAction">
-                        <!-- Button Link here -->
-                    </div>
+                <div class="modal-text-pane">
+                    <h4 style="font-family: var(--font-heading); color: var(--text-main); font-size: 1.25rem; margin-bottom: 15px;" id="modalProjTitleDetail">Ledger Assignment</h4>
+                    <div class="modal-scrollable-text" id="modalProjDesc"></div>
+                    <div id="modalProjAction"></div>
                 </div>
             </div>
         </div>
@@ -1484,7 +1296,8 @@ display: flex;
         function hideProjectModal() {
             const modal = document.getElementById('projectModal');
             modal.classList.remove('active');
-            document.body.style.overflow = 'auto'; document.body.style.paddingRight = '0px';
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
             if (modalSwiper) {
                 modalSwiper.destroy(true, true);
                 modalSwiper = null;
@@ -1506,36 +1319,28 @@ display: flex;
 
         // Pop-up Modal Multi-format Detection and Rendering
         function openDocModal(fileUrl, docTitle, docIssuer) {
-            const modal = document.getElementById('documentModal');
-            const titleElem = document.getElementById('modalDocTitle');
-            const issuerElem = document.getElementById('modalDocIssuer');
+            document.getElementById('modalDocTitle').textContent = docTitle;
+            document.getElementById('modalDocIssuer').textContent = 'Issuer Authority: ' + docIssuer;
             const bodyElem = document.getElementById('modalDocBody');
             
-            titleElem.textContent = docTitle;
-            issuerElem.textContent = docIssuer;
-            
-            // Get file extension
             const extension = fileUrl.split('.').pop().toLowerCase();
-            
-            let contentHtml = '';
-            
             if (extension === 'pdf') {
-                contentHtml = `<iframe src="${fileUrl}" title="${docTitle}" type="application/pdf"></iframe>`;
+                bodyElem.innerHTML = `<iframe src="${fileUrl}" title="${docTitle}" type="application/pdf"></iframe>`;
             } else if (['jpg', 'jpeg', 'png'].includes(extension)) {
-                contentHtml = `<img src="${fileUrl}" alt="${docTitle}">`;
+                bodyElem.innerHTML = `<img src="${fileUrl}" alt="${docTitle}">`;
             } else {
-                contentHtml = `<p style="color: var(--charcoal); font-weight: 500;">Direct preview is not supported for this file format.</p>`;
+                bodyElem.innerHTML = `<p style="color: var(--text-muted);">Preview format error.</p>`;
             }
-            
-            bodyElem.innerHTML = contentHtml;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; document.body.style.paddingRight = (window.innerWidth - document.documentElement.clientWidth) + 'px'; // Disable scroll under modal
+            document.getElementById('documentModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            document.body.style.paddingRight = (window.innerWidth - document.documentElement.clientWidth) + 'px';
         }
 
         function hideDocModal() {
             const modal = document.getElementById('documentModal');
             modal.classList.remove('active');
-            document.body.style.overflow = 'auto'; document.body.style.paddingRight = '0px'; // Enable scroll
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
             
             // Clear content after animation
             setTimeout(() => {
@@ -1573,6 +1378,17 @@ display: flex;
                 }
             });
         });
+
+        // Sticky Scrolling Navbar Transitions
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('navbar');
+            if (nav) {
+                if (window.scrollY > 40) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => { AOS.init({ once: true, offset: 80 }); });
     </script>
 </body>
 </html>
