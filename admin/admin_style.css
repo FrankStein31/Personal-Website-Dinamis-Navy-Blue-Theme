@@ -4,26 +4,26 @@ html {
     width: 100%;
 }
 :root {
-    --primary: #B76E79; /* Rose Gold */
-    --primary-light: #F4E3E5;
-    --primary-hover: #A05C66;
-    --dark: #2C1E21; /* Dark Charcoal Pink */
-    --light-bg: #FAF6F6; /* Ivory Soft Pink */
-    --sidebar-bg: #FFFFFF;
+    --primary: #2F6E9B; /* Medium steel blue from color palette */
+    --primary-light: #EBF5FA; /* Very light ice-blue tint */
+    --primary-hover: #0F2E57; /* Dark navy blue from color palette */
+    --dark: #06162B; /* Deep dark navy from color palette */
+    --light-bg: #F4FBFF; /* Very light ivory/blue-white from color palette */
+    --sidebar-bg: #0F2E57; /* Dark navy blue from color palette */
     --card-bg: #FFFFFF;
-    --text-main: #332225;
-    --text-muted: #8A7276;
-    --border: #F3E5E7;
-    --success: #70A288;
-    --danger: #D96B6B;
-    --shadow-sm: 0 2px 4px rgba(183, 110, 121, 0.05);
-    --shadow-md: 0 4px 12px rgba(183, 110, 121, 0.08);
-    --shadow-lg: 0 8px 24px rgba(183, 110, 121, 0.12);
+    --text-main: #06162B;
+    --text-muted: #2F6E9B;
+    --border: #A8D4EA; /* Light ice blue from color palette */
+    --success: #10B981;
+    --danger: #EF4444;
+    --shadow-sm: 0 2px 8px rgba(15, 46, 87, 0.04);
+    --shadow-md: 0 4px 16px rgba(15, 46, 87, 0.08);
+    --shadow-lg: 0 8px 24px rgba(15, 46, 87, 0.12);
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
-    --font-heading: 'Playfair Display', serif;
-    --font-body: 'Poppins', sans-serif;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Inter', sans-serif;
 }
 
 * {
@@ -46,7 +46,7 @@ body {
 .sidebar {
     width: 280px;
     background-color: var(--sidebar-bg);
-    border-right: 1px solid var(--border);
+    border-right: 1px solid rgba(168, 212, 234, 0.15);
     height: 100vh;
     position: fixed;
     top: 0;
@@ -59,7 +59,7 @@ body {
 
 .sidebar-brand {
     padding: 30px 24px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(168, 212, 234, 0.15);
     display: flex;
     align-items: center;
     gap: 12px;
@@ -67,14 +67,14 @@ body {
 
 .sidebar-brand i {
     font-size: 1.5rem;
-    color: var(--primary);
+    color: #A8D4EA; /* Light ice blue icon */
 }
 
 .sidebar-brand h2 {
     font-family: var(--font-heading);
     font-size: 1.35rem;
     font-weight: 700;
-    color: var(--dark);
+    color: #F4FBFF; /* Light ivory text */
     letter-spacing: 0.5px;
 }
 
@@ -93,7 +93,7 @@ body {
     align-items: center;
     gap: 14px;
     padding: 14px 18px;
-    color: var(--text-muted);
+    color: #A8D4EA;
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 500;
@@ -102,19 +102,19 @@ body {
 }
 
 .sidebar-item a:hover {
-    background-color: var(--primary-light);
-    color: var(--primary);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #F4FBFF;
 }
 
 .sidebar-item.active a {
     background-color: var(--primary);
     color: #FFFFFF;
-    box-shadow: 0 4px 12px rgba(183, 110, 121, 0.25);
+    box-shadow: 0 4px 12px rgba(15, 46, 87, 0.35);
 }
 
 .sidebar-footer {
     padding: 20px 16px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(168, 212, 234, 0.15);
 }
 
 .btn-logout {
@@ -124,7 +124,7 @@ body {
     gap: 8px;
     width: 100%;
     padding: 12px;
-    background-color: #FFF0F1;
+    background-color: rgba(239, 68, 68, 0.1);
     color: var(--danger);
     border: none;
     border-radius: var(--radius-md);
@@ -317,7 +317,7 @@ label {
     outline: none;
     border-color: var(--primary);
     background-color: #FFFFFF;
-    box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.1);
+    box-shadow: 0 0 0 3px rgba(47, 110, 155, 0.15);
 }
 
 textarea.form-control {
@@ -338,7 +338,7 @@ textarea.form-control {
     border-radius: var(--radius-md);
     object-fit: cover;
     border: 2px solid var(--primary);
-    background-color: #FFF5F6;
+    background-color: var(--primary-light);
 }
 
 .no-photo {
@@ -368,12 +368,12 @@ textarea.form-control {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 4px 12px rgba(183, 110, 121, 0.2);
+    box-shadow: 0 4px 12px rgba(15, 46, 87, 0.15);
 }
 
 .btn-primary:hover {
     background-color: var(--primary-hover);
-    box-shadow: 0 6px 16px rgba(183, 110, 121, 0.3);
+    box-shadow: 0 6px 16px rgba(15, 46, 87, 0.25);
 }
 
 /* CRUD Table and Actions */
@@ -414,7 +414,7 @@ textarea.form-control {
 .admin-table th {
     text-align: left;
     padding: 16px 24px;
-    background-color: #FAF5F6;
+    background-color: var(--primary-light);
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-muted);
@@ -494,7 +494,7 @@ textarea.form-control {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(44, 30, 33, 0.4);
+    background-color: rgba(6, 22, 43, 0.45);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
@@ -585,7 +585,7 @@ textarea.form-control {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(44, 30, 33, 0.4);
+    background-color: rgba(6, 22, 43, 0.45);
     backdrop-filter: blur(2px);
     z-index: 1004;
     opacity: 0;

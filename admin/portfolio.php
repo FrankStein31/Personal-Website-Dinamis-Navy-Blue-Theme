@@ -11,12 +11,16 @@ $edit_id = isset($_GET['id']) ? $_GET['id'] : '';
 if ($action === 'delete' && !empty($edit_id)) {
     $filtered_projects = [];
     $found = false;
-    $file_to_delete = '';
+    $files_to_delete = [];
     
     foreach ($projects as $proj) {
         if ($proj['id'] === $edit_id) {
             $found = true;
-            $file_to_delete = isset($proj['file']) ? $proj['file'] : '';
+            if (!empty($proj['files']) && is_array($proj['files'])) {
+                $files_to_delete = $proj['files'];
+            } elseif (!empty($proj['file'])) {
+                $files_to_delete = [$proj['file']];
+            }
             continue; // Skip the item to delete
         }
         $filtered_projects[] = $proj;
@@ -25,8 +29,10 @@ if ($action === 'delete' && !empty($edit_id)) {
     if ($found) {
         $db_data['portfolio'] = $filtered_projects;
         if (save_db_data($db_data)) {
-            if (!empty($file_to_delete)) {
-                delete_file($file_to_delete);
+            foreach ($files_to_delete as $file_to_delete) {
+                if (!empty($file_to_delete)) {
+                    delete_file($file_to_delete);
+                }
             }
             $_SESSION['success_msg'] = 'Project deleted successfully!';
         } else {
@@ -49,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error_msg'] = 'Project title is required!';
     } else {
         $upload_error = '';
-        $uploaded_file = '';
+        $uploaded_files = [];
         
         // Find existing project if editing
         $existing_proj = null;
@@ -57,27 +63,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             foreach ($projects as $p) {
                 if ($p['id'] === $edit_id) {
                     $existing_proj = $p;
-                    $uploaded_file = isset($p['file']) ? $p['file'] : '';
+                    if (!empty($p['files']) && is_array($p['files'])) {
+                        $uploaded_files = $p['files'];
+                    } elseif (!empty($p['file'])) {
+                        $uploaded_files = [$p['file']];
+                    }
                     break;
                 }
             }
         }
         
-        // Check file upload
-        $file_uploaded = isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE;
-        
-        if ($file_uploaded) {
-            // Upload new file (allows jpg, jpeg, png, pdf)
-            $upload_res = upload_file($_FILES['file'], ['jpg', 'jpeg', 'png', 'pdf']);
-            
-            if ($upload_res['success']) {
-                // Delete previous file if editing and new file uploaded successfully
-                if ($action === 'edit' && !empty($uploaded_file)) {
-                    delete_file($uploaded_file);
+        // Handle deletion of selected existing files
+        if (isset($_POST['delete_existing_files']) && is_array($_POST['delete_existing_files'])) {
+            foreach ($_POST['delete_existing_files'] as $del_f) {
+                if (($key = array_search($del_f, $uploaded_files)) !== false) {
+                    unset($uploaded_files[$key]);
+                    delete_file($del_f);
                 }
-                $uploaded_file = $upload_res['filename'];
-            } else {
-                $upload_error = $upload_res['message'];
+            }
+            $uploaded_files = array_values($uploaded_files); // re-index
+        }
+        
+        // Check and process new file uploads (files[] multiple)
+        if (isset($_FILES['files']) && !empty($_FILES['files']['name'][0])) {
+            $files_count = count($_FILES['files']['name']);
+            for ($i = 0; $i < $files_count; $i++) {
+                if ($_FILES['files']['error'][$i] === UPLOAD_ERR_OK) {
+                    $single_file = [
+                        'name' => $_FILES['files']['name'][$i],
+                        'type' => $_FILES['files']['type'][$i],
+                        'tmp_name' => $_FILES['files']['tmp_name'][$i],
+                        'error' => $_FILES['files']['error'][$i],
+                        'size' => $_FILES['files']['size'][$i]
+                    ];
+                    
+                    $upload_res = upload_file($single_file, ['jpg', 'jpeg', 'png', 'pdf']);
+                    
+                    if ($upload_res['success']) {
+                        $uploaded_files[] = $upload_res['filename'];
+                    } else {
+                        $upload_error = $upload_res['message'];
+                        break;
+                    }
+                } elseif ($_FILES['files']['error'][$i] !== UPLOAD_ERR_NO_FILE) {
+                    $upload_error = 'Error occurred during file upload.';
+                    break;
+                }
             }
         }
         
@@ -88,7 +119,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'title' => $title,
                     'description' => $description,
                     'link' => $link,
-                    'file' => $uploaded_file
+                    'files' => $uploaded_files,
+                    'file' => !empty($uploaded_files) ? $uploaded_files[0] : '' // legacy support
                 ];
                 $db_data['portfolio'][] = $new_proj;
                 
@@ -106,7 +138,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $proj['title'] = $title;
                         $proj['description'] = $description;
                         $proj['link'] = $link;
-                        $proj['file'] = $uploaded_file;
+                        $proj['files'] = $uploaded_files;
+                        $proj['file'] = !empty($uploaded_files) ? $uploaded_files[0] : '';
                         $updated = true;
                         break;
                     }
@@ -177,25 +210,43 @@ if ($action === 'edit' && !empty($edit_id)) {
             </div>
             
             <div class="form-group">
-                <label for="file">Project Document / Image</label>
-                <input type="file" id="file" name="file" class="form-control" accept="image/png, image/jpeg, image/jpg, application/pdf">
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Supported formats: JPG, JPEG, PNG, PDF. Leave blank to keep current file if editing.</p>
+                <label for="files">Project Documents / Images (Multiple files allowed)</label>
+                <input type="file" id="files" name="files[]" class="form-control" accept="image/png, image/jpeg, image/jpg, application/pdf" multiple>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Supported formats: JPG, JPEG, PNG, PDF. You can select multiple files at once.</p>
                 
-                <?php if ($edit_proj && !empty($edit_proj['file'])): ?>
-                    <div class="photo-preview-container">
-                        <div>
-                            <p style="font-size: 0.8rem; font-weight: 600; margin-bottom: 8px; color: var(--dark);">Current Attachment:</p>
-                            <?php 
-                            $ext = strtolower(pathinfo($edit_proj['file'], PATHINFO_EXTENSION));
-                            if (in_array($ext, ['jpg', 'jpeg', 'png'])):
+                <?php 
+                $proj_files = [];
+                if ($edit_proj) {
+                    if (!empty($edit_proj['files']) && is_array($edit_proj['files'])) {
+                        $proj_files = $edit_proj['files'];
+                    } elseif (!empty($edit_proj['file'])) {
+                        $proj_files = [$edit_proj['file']];
+                    }
+                }
+                if (!empty($proj_files)): 
+                ?>
+                    <div style="margin-top: 20px;">
+                        <p style="font-size: 0.85rem; font-weight: 600; color: var(--dark); margin-bottom: 10px;">Current Attachments (Check to Delete):</p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px;">
+                            <?php foreach ($proj_files as $f): 
+                                $ext = strtolower(pathinfo($f, PATHINFO_EXTENSION));
                             ?>
-                                <img src="../files/<?= htmlspecialchars($edit_proj['file']) ?>" alt="Preview" class="photo-preview">
-                            <?php else: ?>
-                                <div class="no-photo" style="font-size: 1rem; border-style: solid; height: auto; padding: 15px;">
-                                    <i class="fa-solid fa-file-pdf" style="font-size: 1.5rem; margin-bottom: 5px;"></i>
-                                    <span><?= htmlspecialchars($edit_proj['file']) ?></span>
+                                <div style="position: relative; border: 1px solid var(--border); border-radius: 8px; padding: 10px; background-color: var(--primary-light); text-align: center;">
+                                    <?php if (in_array($ext, ['jpg', 'jpeg', 'png'])): ?>
+                                        <img src="../files/<?= htmlspecialchars($f) ?>" style="width: 100%; height: 80px; object-fit: cover; border-radius: 6px; margin-bottom: 8px;">
+                                    <?php else: ?>
+                                        <div style="height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--primary); font-size: 1.8rem; margin-bottom: 8px;">
+                                            <i class="fa-solid fa-file-pdf"></i>
+                                        </div>
+                                    <?php endif; ?>
+                                    <div style="font-size: 0.75rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; color: var(--text-muted); margin-bottom: 10px; padding: 0 4px;" title="<?= htmlspecialchars($f) ?>">
+                                        <?= htmlspecialchars($f) ?>
+                                    </div>
+                                    <label style="display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-size: 0.75rem; color: var(--danger); cursor: pointer; font-weight: 600; width: 100%;">
+                                        <input type="checkbox" name="delete_existing_files[]" value="<?= htmlspecialchars($f) ?>"> Delete
+                                    </label>
                                 </div>
-                            <?php endif; ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -254,12 +305,29 @@ if ($action === 'edit' && !empty($edit_id)) {
                                     <?= htmlspecialchars($p['description'] ?: '-') ?>
                                 </td>
                                 <td>
-                                    <?php if (!empty($p['file']) && file_exists(__DIR__ . '/../files/' . $p['file'])): ?>
-                                        <a href="#" class="file-link" onclick="showAdminDoc('../files/<?= htmlspecialchars($p['file']) ?>', '<?= htmlspecialchars(addslashes($p['title'])) ?>'); return false;">
-                                            <i class="fa-solid fa-eye"></i> View File
-                                        </a>
-                                    <?php else: ?>
-                                        <span style="color: var(--text-muted); font-size: 0.85rem;">No file</span>
+                                    <?php 
+                                    $p_files = [];
+                                    if (!empty($p['files']) && is_array($p['files'])) {
+                                        $p_files = $p['files'];
+                                    } elseif (!empty($p['file'])) {
+                                        $p_files = [$p['file']];
+                                    }
+                                    
+                                    if (!empty($p_files)): 
+                                        foreach ($p_files as $f_idx => $f):
+                                            if (file_exists(__DIR__ . '/../files/' . $f)):
+                                    ?>
+                                                <div style="margin-bottom: 6px;">
+                                                    <a href="#" class="file-link" onclick="showAdminDoc('../files/<?= htmlspecialchars($f) ?>', '<?= htmlspecialchars(addslashes($p['title'])) ?>'); return false;">
+                                                        <i class="fa-solid fa-file-invoice"></i> File <?= $f_idx + 1 ?>
+                                                    </a>
+                                                </div>
+                                    <?php 
+                                            endif;
+                                        endforeach;
+                                    else: 
+                                    ?>
+                                        <span style="color: var(--text-muted); font-size: 0.85rem;">No files</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>

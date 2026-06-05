@@ -1,15 +1,59 @@
 {
     "biodata": {
-        "name": "",
-        "role": "",
-        "description": "",
-        "photo": ""
+        "name": "FRANKIE STEINLIE",
+        "role": "Full Stack Developer",
+        "description": "wasdwasdawdsda awdsadasd awdsadas",
+        "photo": "6a228555b772c.png"
     },
     "experiences": [],
-    "certificates": [],
-    "socmed": [],
+    "certificates": [
+        {
+            "id": "6a2285f5667fe",
+            "name": "FRANKIE STEINLIE",
+            "issuer": "coba",
+            "file": "6a2285f564e81.pdf"
+        }
+    ],
+    "socmed": [
+        {
+            "id": "6a2285fd3b529",
+            "platform": "LinkedIn",
+            "url": "https:\/\/steinliejoki.page.gd\/",
+            "icon": "fab fa-linkedin"
+        },
+        {
+            "id": "6a2286035c395",
+            "platform": "Instagram",
+            "url": "https:\/\/steinliejoki.page.gd\/",
+            "icon": "fab fa-instagram"
+        }
+    ],
     "settings": {
-        "password": "$2y$12$st.rV3Vo67DaPgs1f12kHOCX34zoglUmUBftGfzB.PA5mawofpxea"
+        "password": "$2y$12$CsOnWfLMy\/lOEGg64tz\/Ue2d9OPkLsQC5LMn3lYHJzOC9l\/w5Wmc."
     },
-    "portfolio": []
+    "portfolio": [
+        {
+            "id": "6a2285a41666f",
+            "title": "awsdasd",
+            "description": "wasdaw",
+            "link": "https:\/\/frankie-steinlie.page.gd\/",
+            "files": [
+                "6a2285ad154fe.png",
+                "6a2285b802dcc.png",
+                "6a2285beeb5f8.jpg"
+            ],
+            "file": "6a2285ad154fe.png"
+        },
+        {
+            "id": "6a228732dcb2e",
+            "title": "My Cinematic Navy Project",
+            "description": "This project features a cinematic navy blue theme with modern swiper component and multi-image uploads.",
+            "link": "https:\/\/github.com\/test-cinematic",
+            "files": [
+                "6a228732d5e16.png",
+                "6a228732daacc.png"
+            ],
+            "file": "6a228732d5e16.png"
+        }
+    ]
 }

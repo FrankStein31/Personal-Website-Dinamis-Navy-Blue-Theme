@@ -91,14 +91,14 @@ if (!empty($photo)) $completion += 25;
                 <span style="font-size: 0.85rem; font-weight: 600; color: var(--dark);">Profile Completion Status</span>
                 <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary);"><?= $completion ?>%</span>
             </div>
-            <div style="width: 100%; height: 8px; background-color: #EBE0E2; border-radius: 4px; overflow: hidden;">
+            <div style="width: 100%; height: 8px; background-color: var(--primary-light); border-radius: 4px; overflow: hidden;">
                 <div style="width: <?= $completion ?>%; height: 100%; background-color: var(--primary); border-radius: 4px; transition: width 0.5s ease;"></div>
             </div>
         </div>
     </div>
     
     <!-- Quick Actions Card -->
-    <div class="form-card" style="max-width: 100%; margin: 0; display: flex; flex-direction: column; gap: 15px; background: linear-gradient(135deg, #FFFFFF 0%, #FAF5F6 100%);">
+    <div class="form-card" style="max-width: 100%; margin: 0; display: flex; flex-direction: column; gap: 15px; background: linear-gradient(135deg, #FFFFFF 0%, var(--primary-light) 100%);">
         <h2 style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--dark); margin-bottom: 10px;">Quick Actions</h2>
         
         <a href="biodata.php" class="btn-primary" style="text-decoration: none; justify-content: center; width: 100%;">

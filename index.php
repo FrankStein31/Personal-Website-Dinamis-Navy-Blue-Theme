@@ -27,32 +27,35 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- AOS (Animate on Scroll) CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+    <!-- Swiper CSS (Instagram slider) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
     <style>
-        /* CSS Custom Variables for Elegant Feminine Theme */
+        /* CSS Custom Variables for Cinematic Navy Theme */
         :root {
-            --rose-gold: #B76E79;
-            --rose-gold-dark: #9E5560;
-            --rose-gold-light: #E8C5C8;
-            --soft-blush: #FFECEF;
-            --ivory-white: #FFFDF9;
-            --charcoal: #2C1E21;
-            --text-dark: #3F3033;
-            --text-muted: #837073;
-            --border-color: rgba(183, 110, 121, 0.15);
-            --font-heading: 'Playfair Display', serif;
-            --font-body: 'Poppins', sans-serif;
-            --glass-bg: rgba(255, 255, 255, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --glass-shadow: 0 10px 30px rgba(183, 110, 121, 0.08);
-            --glow-color: rgba(183, 110, 121, 0.35);
+            --rose-gold: #8da4c4; /* Silver/Charcoal Accent */
+            --rose-gold-dark: #64748b;
+            --rose-gold-light: #cbd5e1;
+            --soft-blush: #0f172a; /* Navy Blue */
+            --ivory-white: #0a1128; /* Midnight Blue */
+            --charcoal: #020617; /* Deep Navy */
+            --text-dark: #f8fafc; /* White Ivory */
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --glass-bg: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --glow-color: rgba(141, 164, 196, 0.2);
         }
 
         /* General Styles */
@@ -70,7 +73,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
 
         body {
             font-family: var(--font-body);
-            background: linear-gradient(135deg, #FFFDF9 0%, #FAF0F2 50%, #F5E3E6 100%);
+            background: linear-gradient(135deg, #020617 0%, #0b1329 50%, #0f172a 100%);
             color: var(--text-dark);
             line-height: 1.6;
             position: relative;
@@ -93,7 +96,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
             position: absolute;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(255,204,213,0.3) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(141,164,196,0.15) 0%, rgba(2,6,23,0) 70%);
             top: -150px;
             right: -100px;
             z-index: 1;
@@ -104,7 +107,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
             position: absolute;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(232,197,200,0.2) 0%, rgba(255,255,255,0) 75%);
+            background: radial-gradient(circle, rgba(30,41,59,0.3) 0%, rgba(2,6,23,0) 75%);
             bottom: 20%;
             left: -200px;
             z-index: 1;
@@ -323,56 +326,58 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
 
         .profile-frame-wrap {
             position: relative;
-            width: 450px;
-            aspect-ratio: 1 / 1.13;
-            padding: 6px;
-            background: #FFFFFF;
-            clip-path: url(#heart-clip);
+            width: 420px;
+            aspect-ratio: 1 / 1.15;
+            padding: 8px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
             z-index: 2;
             transition: all 0.5s ease;
-            filter: drop-shadow(0 15px 30px rgba(183, 110, 121, 0.16));
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         }
-
+ 
         .profile-frame-wrap:hover {
             transform: scale(1.03);
-            filter: drop-shadow(0 20px 40px rgba(183, 110, 121, 0.25));
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.15);
         }
-
+ 
         .profile-frame {
             width: 100%;
             height: 100%;
-            clip-path: url(#heart-clip);
+            border-radius: 18px;
             overflow: hidden;
             background: var(--soft-blush);
         }
-
+ 
         .profile-frame img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center 20%;
-            transform: scale(1.08);
+            transform: scale(1.05);
             transition: transform 0.5s ease;
         }
-
+ 
         .profile-frame-wrap:hover img {
-            transform: scale(1.15);
+            transform: scale(1.12);
         }
-
+ 
         /* Organic blob behind the photo frame */
         .blob-backdrop {
             position: absolute;
-            width: 500px;
-            height: 580px;
-            background: linear-gradient(135deg, var(--rose-gold-light) 0%, var(--soft-blush) 100%);
+            width: 480px;
+            height: 520px;
+            background: linear-gradient(135deg, rgba(141,164,196,0.1) 0%, rgba(15,23,42,0.4) 100%);
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
             z-index: 1;
             top: -20px;
             left: -20px;
             animation: morphBlob 15s ease-in-out infinite alternate;
-            opacity: 0.7;
+            opacity: 0.6;
         }
-
+ 
         @keyframes morphBlob {
             0% {
                 border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
@@ -953,6 +958,78 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
             transform: translateY(-1px);
         }
 
+        /* Swiper Custom styling for Instagram look */
+        .project-preview-box {
+            padding: 0;
+            cursor: pointer;
+            overflow: hidden;
+            width: 100%;
+            height: 250px;
+            background-color: var(--soft-blush);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-swiper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .project-swiper .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #020617;
+            overflow: hidden;
+        }
+        
+        .project-swiper .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-swiper .swiper-slide iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .project-swiper .swiper-button-next,
+        .project-swiper .swiper-button-prev {
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.4);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-swiper .swiper-button-next::after,
+        .project-swiper .swiper-button-prev::after {
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .project-swiper:hover .swiper-button-next,
+        .project-swiper:hover .swiper-button-prev {
+            opacity: 1;
+        }
+        
+        .project-swiper .swiper-pagination-bullet {
+            background: #ffffff;
+            opacity: 0.5;
+        }
+        
+        .project-swiper .swiper-pagination-bullet-active {
+            background: var(--rose-gold);
+            opacity: 1;
+        }
+
         /* POP-UP MODAL MULTI-FORMAT */
         .modal-overlay {
             position: fixed;
@@ -960,7 +1037,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(44, 30, 33, 0.6);
+            background-color: rgba(2, 6, 23, 0.85);
             backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
@@ -971,14 +1048,14 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
             transition: opacity 0.4s ease;
             padding: 20px;
         }
-
+ 
         .modal-overlay.active {
             opacity: 1;
             pointer-events: auto;
         }
-
+ 
         .modal-box {
-            background-color: var(--ivory-white);
+            background-color: var(--soft-blush);
             border-radius: 28px;
             width: 100%;
             max-width: 850px;
@@ -986,42 +1063,42 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 25px 60px rgba(44, 30, 33, 0.2);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
             transform: scale(0.9);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--border-color);
         }
-
+ 
         .modal-overlay.active .modal-box {
             transform: scale(1);
         }
-
+ 
         .modal-header {
-            padding: 24px 30px;
+            padding: 20px 30px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #FFFFFF;
+            background-color: var(--soft-blush);
         }
-
+ 
         .modal-title-container h3 {
             font-family: var(--font-heading);
-            font-size: 1.4rem;
-            color: var(--charcoal);
+            font-size: 1.35rem;
+            color: var(--text-dark);
             font-weight: 700;
         }
-
+ 
         .modal-title-container p {
             color: var(--text-muted);
             font-size: 0.85rem;
             margin-top: 2px;
         }
-
+ 
         .modal-close-btn {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             color: var(--text-muted);
             cursor: pointer;
             transition: all 0.3s;
@@ -1032,12 +1109,12 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
             align-items: center;
             justify-content: center;
         }
-
+ 
         .modal-close-btn:hover {
-            background-color: var(--soft-blush);
+            background-color: rgba(255, 255, 255, 0.05);
             color: var(--rose-gold);
         }
-
+ 
         .modal-body {
             padding: 30px;
             overflow-y: auto;
@@ -1045,26 +1122,131 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: rgba(250, 246, 247, 0.5);
+            background-color: var(--charcoal);
             min-height: 400px;
         }
-
+ 
         .modal-body img {
             max-width: 100%;
             height: auto;
             max-height: 70vh;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             object-fit: contain;
         }
-
+ 
         .modal-body iframe, .modal-body object {
             width: 100%;
             height: 60vh;
             border: none;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
+
+        /* Split-screen detail modal for project */
+        .modal-grid-body {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            flex-grow: 1;
+            overflow: hidden;
+            background-color: var(--charcoal);
+        }
+
+        .modal-slider-side {
+            position: relative;
+            background-color: #020617;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            min-height: 350px;
+        }
+
+        .modal-swiper {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .modal-swiper .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #020617;
+        }
+
+        .modal-swiper .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-swiper .swiper-slide iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .modal-desc-side {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background-color: var(--soft-blush);
+            border-left: 1px solid var(--border-color);
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        .modal-scroll-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 25px;
+            white-space: pre-wrap;
+            overflow-y: auto;
+        }
+
+        .modal-proj-action {
+            margin-top: auto;
+            padding-top: 15px;
+        }
+
+        /* Modal Swiper Navigation button overrides */
+        .modal-swiper .swiper-button-next,
+        .modal-swiper .swiper-button-prev {
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.5);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+
+        .modal-swiper .swiper-button-next::after,
+        .modal-swiper .swiper-button-prev::after {
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .modal-grid-body {
+                grid-template-columns: 1fr;
+                max-height: 65vh;
+                overflow-y: auto;
+            }
+            .modal-slider-side {
+                height: 250px;
+                min-height: 250px;
+            }
+            .modal-desc-side {
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+                padding: 20px;
+                max-height: none;
+            }
+        }
+
 
         /* Footer */
         footer {
@@ -1334,21 +1516,12 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
         <div class="decor-blob-2"></div>
     </div>
 
-    <!-- SVG Clip Path for Heart Profile Image -->
-    <svg width="0" height="0" style="position: absolute; pointer-events: none;">
-        <defs>
-            <clipPath id="heart-clip" clipPathUnits="objectBoundingBox">
-                <path d="M 0.5,0.95 C 0.15,0.65 0,0.45 0,0.28 C 0,0.1 0.12,0.02 0.28,0.02 C 0.38,0.02 0.46,0.1 0.5,0.14 C 0.54,0.1 0.62,0.02 0.72,0.02 C 0.88,0.02 1,0.1 1,0.28 C 1,0.45 0.85,0.65 0.5,0.95 Z" />
-            </clipPath>
-        </defs>
-    </svg>
-
     <!-- Navigation Bar -->
     <header id="navbar">
         <div class="container">
             <nav>
                 <a href="#hero" class="logo">
-                    <i class="fa-solid fa-gem"></i>
+                    <i class="fa-solid fa-film"></i>
                     <span><?= !empty($name) ? htmlspecialchars($name) : 'Personal Website' ?></span>
                 </a>
                 
@@ -1553,23 +1726,47 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
                     <?php 
                     $featured_projects = array_slice($portfolio, 0, 3);
                     foreach ($featured_projects as $proj): 
+                        // Normalize files
+                        $proj_files = [];
+                        if (!empty($proj['files']) && is_array($proj['files'])) {
+                            $proj_files = $proj['files'];
+                        } elseif (!empty($proj['file'])) {
+                            $proj_files = [$proj['file']];
+                        }
+                        $proj['files'] = $proj_files; // Ensure normalized files array is encoded in JSON
                     ?>
-                        <div class="portfolio-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                        <div class="portfolio-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100" onclick="openProjectModal(<?= htmlspecialchars(json_encode($proj)) ?>)" style="cursor: pointer;">
                             <div>
-                                <div class="project-preview-box" onclick="openDocModal('files/<?= htmlspecialchars($proj['file']) ?>', '<?= htmlspecialchars(addslashes($proj['title'])) ?>', 'Project documentation')">
-                                    <?php if (!empty($proj['file']) && file_exists(__DIR__ . '/files/' . $proj['file'])): 
-                                        $ext = strtolower(pathinfo($proj['file'], PATHINFO_EXTENSION));
-                                        if (in_array($ext, ['jpg', 'jpeg', 'png'])): ?>
-                                            <img src="files/<?= htmlspecialchars($proj['file']) ?>" alt="<?= htmlspecialchars($proj['title']) ?>">
-                                        <?php elseif ($ext === 'pdf'): ?>
-                                            <iframe src="files/<?= htmlspecialchars($proj['file']) ?>#page=1&toolbar=0&navpanes=0&scrollbar=0" scrolling="no"></iframe>
-                                            <div class="iframe-overlay"></div>
-                                        <?php else: ?>
-                                            <div class="no-preview"><i class="fa-solid fa-file-invoice"></i></div>
+                                <div class="project-preview-box">
+                                    <div class="swiper project-swiper">
+                                        <div class="swiper-wrapper">
+                                            <?php if (!empty($proj_files)): ?>
+                                                <?php foreach ($proj_files as $file): ?>
+                                                    <div class="swiper-slide">
+                                                        <?php 
+                                                        $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                                                        if (in_array($ext, ['jpg', 'jpeg', 'png'])): ?>
+                                                            <img src="files/<?= htmlspecialchars($file) ?>" alt="<?= htmlspecialchars($proj['title']) ?>">
+                                                        <?php elseif ($ext === 'pdf'): ?>
+                                                            <iframe src="files/<?= htmlspecialchars($file) ?>#page=1&toolbar=0&navpanes=0&scrollbar=0" scrolling="no"></iframe>
+                                                            <div class="iframe-overlay"></div>
+                                                        <?php else: ?>
+                                                            <div class="no-preview"><i class="fa-solid fa-file-invoice"></i></div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <div class="swiper-slide">
+                                                    <div class="no-preview"><i class="fa-solid fa-file-circle-exclamation"></i></div>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <?php if (count($proj_files) > 1): ?>
+                                            <div class="swiper-pagination"></div>
+                                            <div class="swiper-button-next"></div>
+                                            <div class="swiper-button-prev"></div>
                                         <?php endif; ?>
-                                    <?php else: ?>
-                                        <div class="no-preview"><i class="fa-solid fa-file-circle-exclamation"></i></div>
-                                    <?php endif; ?>
+                                    </div>
                                 </div>
                                 <div class="portfolio-body">
                                     <h3><?= htmlspecialchars($proj['title']) ?></h3>
@@ -1577,18 +1774,16 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
                                 </div>
                             </div>
                             
-                            <div class="portfolio-footer">
-                                <?php if (!empty($proj['file']) && file_exists(__DIR__ . '/files/' . $proj['file'])): ?>
-                                    <button class="btn-portfolio-action btn-portfolio-primary" onclick="openDocModal('files/<?= htmlspecialchars($proj['file']) ?>', '<?= htmlspecialchars(addslashes($proj['title'])) ?>', 'Project documentation')">
-                                        <i class="fa-solid fa-file-invoice"></i>
-                                        <span>Documentation</span>
-                                    </button>
-                                <?php endif; ?>
+                            <div class="portfolio-footer" onclick="event.stopPropagation()">
+                                <button class="btn-portfolio-action btn-portfolio-primary" onclick="openProjectModal(<?= htmlspecialchars(json_encode($proj)) ?>)">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <span>Detail Proyek</span>
+                                </button>
                                 
                                 <?php if (!empty($proj['link'])): ?>
                                     <a href="<?= htmlspecialchars($proj['link']) ?>" target="_blank" class="btn-portfolio-action btn-portfolio-outline">
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                        <span>Visit Link</span>
+                                        <i class="fa-solid fa-play"></i>
+                                        <span>Tonton Video</span>
                                     </a>
                                 <?php endif; ?>
                             </div>
@@ -1597,7 +1792,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
                 </div>
 
                 <div style="display: flex; justify-content: center; margin-top: 50px;" data-aos="fade-up" data-aos-duration="1000">
-                    <a href="projects.php" class="btn-portfolio-action btn-portfolio-primary" style="max-width: 250px; padding: 14px 35px; border-radius: 50px; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(183, 110, 121, 0.25); text-decoration: none;">
+                    <a href="projects.php" class="btn-portfolio-action btn-portfolio-primary" style="max-width: 250px; padding: 14px 35px; border-radius: 50px; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(141, 164, 196, 0.2); text-decoration: none;">
                         <span>View All Projects</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
@@ -1610,7 +1805,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
     <footer>
         <div class="container">
             <a href="#hero" class="logo">
-                <i class="fa-solid fa-gem"></i>
+                <i class="fa-solid fa-film"></i>
                 <span><?= !empty($name) ? htmlspecialchars($name) : 'Personal Website' ?></span>
             </a>
             <p>&copy; <?= date('Y') ?> <?= htmlspecialchars($name) ?>. All Rights Reserved.</p>
@@ -1618,7 +1813,7 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
         </div>
     </footer>
 
-    <!-- POP-UP MODAL MULTI-FORMAT -->
+    <!-- POP-UP MODAL MULTI-FORMAT (FOR CERTIFICATES) -->
     <div class="modal-overlay" id="documentModal" onclick="closeDocModal(event)">
         <div class="modal-box" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -1634,10 +1829,169 @@ $photo = isset($biodata['photo']) ? $biodata['photo'] : '';
         </div>
     </div>
 
+    <!-- POP-UP MODAL DETAIL PROJECT (FOR PORTFOLIO) -->
+    <div class="modal-overlay" id="projectModal" onclick="closeProjectModal(event)">
+        <div class="modal-box" onclick="event.stopPropagation()" style="max-width: 950px;">
+            <div class="modal-header">
+                <div class="modal-title-container">
+                    <h3 id="modalProjTitle">Project Detail</h3>
+                </div>
+                <button class="modal-close-btn" onclick="hideProjectModal()">&times;</button>
+            </div>
+            <div class="modal-grid-body">
+                <div class="modal-slider-side">
+                    <div class="swiper modal-swiper">
+                        <div class="swiper-wrapper" id="modalSwiperWrapper">
+                            <!-- Swiper slides injected here -->
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+                <div class="modal-desc-side">
+                    <h4 style="font-family: var(--font-heading); color: var(--text-dark); font-size: 1.3rem; margin-bottom: 12px;" id="modalProjTitleDetail">Project Title</h4>
+                    <div class="modal-scroll-desc" id="modalProjDesc">
+                        <!-- Project description here -->
+                    </div>
+                    <div class="modal-proj-action" id="modalProjAction">
+                        <!-- Button Link here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- AOS Animation JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
     <script>
+        // Initialize Swiper for Portfolio Cards
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.project-swiper').forEach(swiperEl => {
+                const slideCount = swiperEl.querySelectorAll('.swiper-slide').length;
+                new Swiper(swiperEl, {
+                    loop: slideCount > 1,
+                    pagination: {
+                        el: swiperEl.querySelector('.swiper-pagination'),
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: swiperEl.querySelector('.swiper-button-next'),
+                        prevEl: swiperEl.querySelector('.swiper-button-prev'),
+                    },
+                });
+            });
+        });
+
+        let modalSwiper = null;
+
+        function openProjectModal(proj) {
+            const modal = document.getElementById('projectModal');
+            document.getElementById('modalProjTitle').textContent = proj.title;
+            document.getElementById('modalProjTitleDetail').textContent = proj.title;
+            document.getElementById('modalProjDesc').textContent = proj.description || '';
+            
+            // Actions / Link button
+            const actionContainer = document.getElementById('modalProjAction');
+            actionContainer.innerHTML = '';
+            if (proj.link) {
+                actionContainer.innerHTML = `
+                    <a href="${proj.link}" target="_blank" class="btn-portfolio-action btn-portfolio-primary" style="width: 100%; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Tonton Video / Lihat Project</span>
+                    </a>
+                `;
+            }
+            
+            // Populate Swiper Slides
+            const wrapper = document.getElementById('modalSwiperWrapper');
+            wrapper.innerHTML = '';
+            
+            // Normalize files key
+            const files = proj.files || (proj.file ? [proj.file] : []);
+            
+            if (files.length === 0) {
+                wrapper.innerHTML = `
+                    <div class="swiper-slide">
+                        <div class="no-preview" style="color: #94a3b8; font-size: 3rem; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-file-circle-exclamation"></i>
+                            <span style="font-size: 1rem;">No Media Available</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                files.forEach(file => {
+                    const ext = file.split('.').pop().toLowerCase();
+                    let slideContent = '';
+                    
+                    if (['jpg', 'jpeg', 'png'].includes(ext)) {
+                        slideContent = `<img src="files/${file}" alt="${proj.title}">`;
+                    } else if (ext === 'pdf') {
+                        slideContent = `<iframe src="files/${file}#toolbar=0" type="application/pdf"></iframe>`;
+                    } else {
+                        slideContent = `
+                            <div class="no-preview" style="color: #94a3b8; font-size: 3rem; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                                <i class="fa-solid fa-file-invoice"></i>
+                                <span style="font-size: 1rem;">Preview not supported</span>
+                            </div>`;
+                    }
+                    
+                    const slide = document.createElement('div');
+                    slide.className = 'swiper-slide';
+                    slide.innerHTML = slideContent;
+                    wrapper.appendChild(slide);
+                });
+            }
+            
+            // Show Modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Initialize Swiper
+            setTimeout(() => {
+                if (modalSwiper) {
+                    modalSwiper.destroy(true, true);
+                }
+                modalSwiper = new Swiper('.modal-swiper', {
+                    loop: files.length > 1,
+                    pagination: {
+                        el: '.modal-swiper .swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '.modal-swiper .swiper-button-next',
+                        prevEl: '.modal-swiper .swiper-button-prev',
+                    },
+                });
+            }, 50);
+        }
+
+        function hideProjectModal() {
+            const modal = document.getElementById('projectModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            if (modalSwiper) {
+                modalSwiper.destroy(true, true);
+                modalSwiper = null;
+            }
+        }
+
+        function closeProjectModal(event) {
+            if (event.target.id === 'projectModal') {
+                hideProjectModal();
+            }
+        }
+        
+        // Add Esc key listener for projectModal
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                hideProjectModal();
+            }
+        });
         // Initialize AOS animations
         AOS.init({
             once: true,

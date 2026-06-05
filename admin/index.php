@@ -38,25 +38,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #B76E79; /* Rose Gold */
-            --primary-hover: #A05C66;
-            --dark: #2C1E21;
-            --light-bg: #FAF6F6; /* Ivory Soft Pink */
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --border: #F3E5E7;
-            --text-main: #332225;
-            --text-muted: #8A7276;
-            --danger: #D96B6B;
+            --primary: #2F6E9B; /* Medium steel blue from color palette */
+            --primary-hover: #0F2E57; /* Dark navy blue from color palette */
+            --dark: #06162B; /* Deep dark navy from color palette */
+            --light-bg: #F4FBFF; /* Very light ivory/blue-white from color palette */
+            --card-bg: rgba(6, 22, 43, 0.85); /* Deep dark navy translucent card */
+            --border: rgba(168, 212, 234, 0.2); /* Light ice blue border */
+            --text-main: #F4FBFF;
+            --text-muted: #A8D4EA;
+            --danger: #EF4444;
             --radius-md: 12px;
             --radius-lg: 20px;
-            --font-heading: 'Playfair Display', serif;
-            --font-body: 'Poppins', sans-serif;
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
         }
 
         * {
@@ -67,8 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         body {
             font-family: var(--font-body);
-            background: radial-gradient(circle at 10% 20%, rgba(254, 237, 238, 0.7) 0%, rgba(252, 240, 241, 0.7) 90%), 
-                        linear-gradient(135deg, #FFFDF9 0%, #F5E5E8 100%);
+            background: linear-gradient(135deg, #06162B 0%, #0F2E57 50%, #2F6E9B 100%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -85,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(244, 194, 194, 0.3) 0%, rgba(229, 178, 178, 0.3) 100%);
+            background: linear-gradient(135deg, rgba(168, 212, 234, 0.2) 0%, rgba(6, 22, 43, 0.2) 100%);
             top: -100px;
             right: -100px;
             filter: blur(50px);
@@ -97,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 400px;
             height: 400px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(183, 110, 121, 0.1) 0%, rgba(212, 165, 165, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(168, 212, 234, 0.1) 0%, rgba(6, 22, 43, 0.1) 100%);
             bottom: -150px;
             left: -150px;
             filter: blur(80px);
@@ -108,11 +107,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 100%;
             max-width: 450px;
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             padding: 45px 40px;
-            box-shadow: 0 15px 35px rgba(183, 110, 121, 0.08), 
-                        0 5px 15px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             position: relative;
             z-index: 10;
@@ -126,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .logo-icon {
             width: 60px;
             height: 60px;
-            background-color: #FFF0F1;
+            background-color: rgba(255, 255, 255, 0.05);
             border-radius: 50%;
             color: var(--primary);
             display: flex;
@@ -135,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 1.8rem;
             margin: 0 auto 20px auto;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 10px rgba(183, 110, 121, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .login-header h1 {

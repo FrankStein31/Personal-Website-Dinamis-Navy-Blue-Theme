@@ -23,31 +23,34 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- AOS (Animate on Scroll) CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
     <style>
-        /* CSS Custom Variables for Elegant Feminine Theme */
+        /* CSS Custom Variables for Cinematic Navy Theme */
         :root {
-            --rose-gold: #B76E79;
-            --rose-gold-dark: #9E5560;
-            --rose-gold-light: #E8C5C8;
-            --soft-blush: #FFECEF;
-            --ivory-white: #FFFDF9;
-            --charcoal: #2C1E21;
-            --text-dark: #3F3033;
-            --text-muted: #837073;
-            --border-color: rgba(183, 110, 121, 0.15);
-            --font-heading: 'Playfair Display', serif;
-            --font-body: 'Poppins', sans-serif;
-            --glass-bg: rgba(255, 255, 255, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --glass-shadow: 0 10px 30px rgba(183, 110, 121, 0.08);
+            --rose-gold: #8da4c4; /* Silver/Charcoal Accent */
+            --rose-gold-dark: #64748b;
+            --rose-gold-light: #cbd5e1;
+            --soft-blush: #0f172a; /* Navy Blue */
+            --ivory-white: #0a1128; /* Midnight Blue */
+            --charcoal: #020617; /* Deep Navy */
+            --text-dark: #f8fafc; /* White Ivory */
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --glass-bg: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         /* General Styles */
@@ -65,7 +68,7 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
 
         body {
             font-family: var(--font-body);
-            background: linear-gradient(135deg, #FFFDF9 0%, #FAF0F2 50%, #F5E3E6 100%);
+            background: linear-gradient(135deg, #020617 0%, #0b1329 50%, #0f172a 100%);
             color: var(--text-dark);
             line-height: 1.6;
             position: relative;
@@ -80,10 +83,10 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
             z-index: 1000;
             padding: 20px 0;
             transition: all 0.4s ease;
-            background: rgba(255, 253, 249, 0.85);
+            background: rgba(2, 6, 23, 0.85);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 20px rgba(183, 110, 121, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .container {
@@ -263,65 +266,86 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
             opacity: 1;
         }
 
-        /* Project File Preview Box */
+        /* Swiper Custom styling for Instagram look */
         .project-preview-box {
-            width: 100%;
-            height: 210px;
-            background-color: rgba(255, 255, 255, 0.75);
-            border-radius: 16px;
+            padding: 0;
+            cursor: pointer;
             overflow: hidden;
-            margin-bottom: 22px;
+            width: 100%;
+            height: 250px;
+            background-color: var(--soft-blush);
+            border-radius: 16px;
             border: 1px solid var(--border-color);
             position: relative;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-swiper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .project-swiper .swiper-slide {
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 20px rgba(183, 110, 121, 0.02);
-            cursor: pointer;
+            background-color: #020617;
+            overflow: hidden;
         }
-
-        .project-preview-box img {
+        
+        .project-swiper .swiper-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
         }
 
-        .project-preview-box iframe {
+        .project-swiper .swiper-slide iframe {
             width: 100%;
             height: 100%;
             border: none;
-            pointer-events: none;
         }
-
-        .project-preview-box .iframe-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: 2;
+        
+        .project-swiper .swiper-button-next,
+        .project-swiper .swiper-button-prev {
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.4);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-
-        .project-preview-box .no-preview {
-            font-size: 3rem;
-            color: var(--rose-gold-light);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+        
+        .project-swiper .swiper-button-next::after,
+        .project-swiper .swiper-button-prev::after {
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .project-swiper:hover .swiper-button-next,
+        .project-swiper:hover .swiper-button-prev {
+            opacity: 1;
+        }
+        
+        .project-swiper .swiper-pagination-bullet {
+            background: #ffffff;
+            opacity: 0.5;
+        }
+        
+        .project-swiper .swiper-pagination-bullet-active {
+            background: var(--rose-gold);
+            opacity: 1;
         }
 
         .project-card:hover .project-preview-box img {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
 
         .project-info h3 {
             font-family: var(--font-heading);
             font-size: 1.35rem;
-            color: var(--charcoal);
+            color: var(--text-dark);
             margin-bottom: 10px;
             font-weight: 700;
             line-height: 1.4;
@@ -359,14 +383,15 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
 
         .btn-portfolio-primary {
             background-color: var(--rose-gold);
-            color: #FFFFFF;
+            color: #020617;
             border: none;
-            box-shadow: 0 4px 10px rgba(183, 110, 121, 0.15);
+            box-shadow: 0 4px 10px rgba(141, 164, 196, 0.2);
         }
 
         .btn-portfolio-primary:hover {
             background-color: var(--rose-gold-dark);
-            box-shadow: 0 6px 15px rgba(183, 110, 121, 0.25);
+            color: #ffffff;
+            box-shadow: 0 6px 15px rgba(141, 164, 196, 0.3);
             transform: translateY(-1px);
         }
 
@@ -378,8 +403,8 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
 
         .btn-portfolio-outline:hover {
             background-color: var(--rose-gold);
-            color: #FFFFFF;
-            box-shadow: 0 4px 12px rgba(183, 110, 121, 0.15);
+            color: #020617;
+            box-shadow: 0 4px 12px rgba(141, 164, 196, 0.2);
             transform: translateY(-1px);
         }
 
@@ -390,7 +415,7 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(44, 30, 33, 0.7);
+            background-color: rgba(2, 6, 23, 0.85);
             backdrop-filter: blur(8px);
             z-index: 2000;
             display: flex;
@@ -407,12 +432,12 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
         }
 
         .modal-box {
-            background-color: var(--ivory-white);
+            background-color: var(--soft-blush);
             border-radius: 28px;
             width: 90%;
-            max-width: 800px;
-            box-shadow: 0 20px 50px rgba(44, 30, 33, 0.25);
-            border: 1px solid rgba(183, 110, 121, 0.15);
+            max-width: 950px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
             overflow: hidden;
             transform: scale(0.9);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
@@ -428,13 +453,13 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(255, 252, 248, 0.8);
+            background-color: var(--soft-blush);
         }
 
         .modal-title-container h3 {
             font-family: var(--font-heading);
             font-size: 1.4rem;
-            color: var(--charcoal);
+            color: var(--text-dark);
             font-weight: 700;
             margin-bottom: 4px;
         }
@@ -459,30 +484,106 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
             color: var(--rose-gold);
         }
 
-        .modal-body {
-            padding: 30px;
-            max-height: 70vh;
-            overflow-y: auto;
+        /* Split-screen detail modal for project */
+        .modal-grid-body {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            background-color: var(--charcoal);
+        }
+
+        .modal-slider-side {
+            position: relative;
+            background-color: #020617;
             display: flex;
-            justify-content: center;
             align-items: center;
-            background-color: #FFFDFB;
+            justify-content: center;
+            overflow: hidden;
+            min-height: 350px;
         }
 
-        .modal-body img {
-            max-width: 100%;
-            max-height: 60vh;
-            object-fit: contain;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(183, 110, 121, 0.1);
-        }
-
-        .modal-body iframe {
+        .modal-swiper {
             width: 100%;
-            height: 60vh;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .modal-swiper .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #020617;
+        }
+
+        .modal-swiper .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-swiper .swiper-slide iframe {
+            width: 100%;
+            height: 100%;
             border: none;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(183, 110, 121, 0.1);
+        }
+
+        .modal-desc-side {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background-color: var(--soft-blush);
+            border-left: 1px solid var(--border-color);
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        .modal-scroll-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 25px;
+            white-space: pre-wrap;
+            overflow-y: auto;
+        }
+
+        .modal-proj-action {
+            margin-top: auto;
+            padding-top: 15px;
+        }
+
+        /* Modal Swiper Navigation button overrides */
+        .modal-swiper .swiper-button-next,
+        .modal-swiper .swiper-button-prev {
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.5);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+
+        .modal-swiper .swiper-button-next::after,
+        .modal-swiper .swiper-button-prev::after {
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .modal-grid-body {
+                grid-template-columns: 1fr;
+                max-height: 65vh;
+                overflow-y: auto;
+            }
+            .modal-slider-side {
+                height: 250px;
+                min-height: 250px;
+            }
+            .modal-desc-side {
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+                padding: 20px;
+                max-height: none;
+            }
         }
 
         /* FOOTER */
@@ -491,7 +592,7 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
             color: var(--ivory-white);
             padding: 60px 0;
             text-align: center;
-            border-top: 2px solid var(--rose-gold);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         footer .logo {
@@ -581,23 +682,49 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
                 </div>
             <?php else: ?>
                 <div class="projects-grid">
-                    <?php foreach ($portfolio as $proj): ?>
-                        <div class="project-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                    <?php 
+                    foreach ($portfolio as $proj): 
+                        // Normalize files
+                        $proj_files = [];
+                        if (!empty($proj['files']) && is_array($proj['files'])) {
+                            $proj_files = $proj['files'];
+                        } elseif (!empty($proj['file'])) {
+                            $proj_files = [$proj['file']];
+                        }
+                        $proj['files'] = $proj_files; // Ensure normalized files array is encoded in JSON
+                    ?>
+                        <div class="project-card" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100" onclick="openProjectModal(<?= htmlspecialchars(json_encode($proj)) ?>)" style="cursor: pointer;">
                             <div>
-                                <div class="project-preview-box" onclick="openDocModal('files/<?= htmlspecialchars($proj['file']) ?>', '<?= htmlspecialchars(addslashes($proj['title'])) ?>', 'Project documentation')">
-                                    <?php if (!empty($proj['file']) && file_exists(__DIR__ . '/files/' . $proj['file'])): 
-                                        $ext = strtolower(pathinfo($proj['file'], PATHINFO_EXTENSION));
-                                        if (in_array($ext, ['jpg', 'jpeg', 'png'])): ?>
-                                            <img src="files/<?= htmlspecialchars($proj['file']) ?>" alt="<?= htmlspecialchars($proj['title']) ?>">
-                                        <?php elseif ($ext === 'pdf'): ?>
-                                            <iframe src="files/<?= htmlspecialchars($proj['file']) ?>#page=1&toolbar=0&navpanes=0&scrollbar=0" scrolling="no"></iframe>
-                                            <div class="iframe-overlay"></div>
-                                        <?php else: ?>
-                                            <div class="no-preview"><i class="fa-solid fa-file-invoice"></i></div>
+                                <div class="project-preview-box">
+                                    <div class="swiper project-swiper">
+                                        <div class="swiper-wrapper">
+                                            <?php if (!empty($proj_files)): ?>
+                                                <?php foreach ($proj_files as $file): ?>
+                                                    <div class="swiper-slide">
+                                                        <?php 
+                                                        $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                                                        if (in_array($ext, ['jpg', 'jpeg', 'png'])): ?>
+                                                            <img src="files/<?= htmlspecialchars($file) ?>" alt="<?= htmlspecialchars($proj['title']) ?>">
+                                                        <?php elseif ($ext === 'pdf'): ?>
+                                                            <iframe src="files/<?= htmlspecialchars($file) ?>#page=1&toolbar=0&navpanes=0&scrollbar=0" scrolling="no"></iframe>
+                                                            <div class="iframe-overlay"></div>
+                                                        <?php else: ?>
+                                                            <div class="no-preview"><i class="fa-solid fa-file-invoice"></i></div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <div class="swiper-slide">
+                                                    <div class="no-preview"><i class="fa-solid fa-file-circle-exclamation"></i></div>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <?php if (count($proj_files) > 1): ?>
+                                            <div class="swiper-pagination"></div>
+                                            <div class="swiper-button-next"></div>
+                                            <div class="swiper-button-prev"></div>
                                         <?php endif; ?>
-                                    <?php else: ?>
-                                        <div class="no-preview"><i class="fa-solid fa-file-circle-exclamation"></i></div>
-                                    <?php endif; ?>
+                                    </div>
                                 </div>
                                 
                                 <div class="project-info">
@@ -606,18 +733,16 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
                                 </div>
                             </div>
                             
-                            <div class="project-footer">
-                                <?php if (!empty($proj['file']) && file_exists(__DIR__ . '/files/' . $proj['file'])): ?>
-                                    <button class="btn-portfolio-action btn-portfolio-primary" onclick="openDocModal('files/<?= htmlspecialchars($proj['file']) ?>', '<?= htmlspecialchars(addslashes($proj['title'])) ?>', 'Project documentation')">
-                                        <i class="fa-solid fa-eye"></i>
-                                        <span>View Document</span>
-                                    </button>
-                                <?php endif; ?>
+                            <div class="project-footer" onclick="event.stopPropagation()">
+                                <button class="btn-portfolio-action btn-portfolio-primary" onclick="openProjectModal(<?= htmlspecialchars(json_encode($proj)) ?>)">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <span>Detail Proyek</span>
+                                </button>
                                 
                                 <?php if (!empty($proj['link'])): ?>
                                     <a href="<?= htmlspecialchars($proj['link']) ?>" target="_blank" class="btn-portfolio-action btn-portfolio-outline">
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                        <span>Visit Link</span>
+                                        <i class="fa-solid fa-play"></i>
+                                        <span>Tonton Video</span>
                                     </a>
                                 <?php endif; ?>
                             </div>
@@ -632,7 +757,7 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
     <footer>
         <div class="container">
             <a href="index.php" class="logo">
-                <i class="fa-solid fa-gem"></i>
+                <i class="fa-solid fa-film"></i>
                 <span><?= !empty($name) ? htmlspecialchars($name) : 'Personal Website' ?></span>
             </a>
             <p>&copy; <?= date('Y') ?> <?= htmlspecialchars($name) ?>. All Rights Reserved.</p>
@@ -640,7 +765,7 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
         </div>
     </footer>
 
-    <!-- POP-UP MODAL MULTI-FORMAT -->
+    <!-- POP-UP MODAL MULTI-FORMAT (FOR DOCUMENTS) -->
     <div class="modal-overlay" id="documentModal" onclick="closeDocModal(event)">
         <div class="modal-box" onclick="event.stopPropagation()">
             <div class="modal-header">
@@ -656,14 +781,174 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
         </div>
     </div>
 
+    <!-- POP-UP MODAL DETAIL PROJECT (FOR PORTFOLIO) -->
+    <div class="modal-overlay" id="projectModal" onclick="closeProjectModal(event)">
+        <div class="modal-box" onclick="event.stopPropagation()" style="max-width: 950px;">
+            <div class="modal-header">
+                <div class="modal-title-container">
+                    <h3 id="modalProjTitle">Project Detail</h3>
+                </div>
+                <button class="modal-close-btn" onclick="hideProjectModal()">&times;</button>
+            </div>
+            <div class="modal-grid-body">
+                <div class="modal-slider-side">
+                    <div class="swiper modal-swiper">
+                        <div class="swiper-wrapper" id="modalSwiperWrapper">
+                            <!-- Swiper slides injected here -->
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+                <div class="modal-desc-side">
+                    <h4 style="font-family: var(--font-heading); color: var(--text-dark); font-size: 1.3rem; margin-bottom: 12px;" id="modalProjTitleDetail">Project Title</h4>
+                    <div class="modal-scroll-desc" id="modalProjDesc">
+                        <!-- Project description here -->
+                    </div>
+                    <div class="modal-proj-action" id="modalProjAction">
+                        <!-- Button Link here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- AOS Animation JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
         // Initialize AOS animations
         AOS.init({
             once: true,
             offset: 80
+        });
+
+        // Initialize Swiper for Portfolio Cards
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.project-swiper').forEach(swiperEl => {
+                const slideCount = swiperEl.querySelectorAll('.swiper-slide').length;
+                new Swiper(swiperEl, {
+                    loop: slideCount > 1,
+                    pagination: {
+                        el: swiperEl.querySelector('.swiper-pagination'),
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: swiperEl.querySelector('.swiper-button-next'),
+                        prevEl: swiperEl.querySelector('.swiper-button-prev'),
+                    },
+                });
+            });
+        });
+
+        let modalSwiper = null;
+
+        function openProjectModal(proj) {
+            const modal = document.getElementById('projectModal');
+            document.getElementById('modalProjTitle').textContent = proj.title;
+            document.getElementById('modalProjTitleDetail').textContent = proj.title;
+            document.getElementById('modalProjDesc').textContent = proj.description || '';
+            
+            // Actions / Link button
+            const actionContainer = document.getElementById('modalProjAction');
+            actionContainer.innerHTML = '';
+            if (proj.link) {
+                actionContainer.innerHTML = `
+                    <a href="${proj.link}" target="_blank" class="btn-portfolio-action btn-portfolio-primary" style="width: 100%; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Tonton Video / Lihat Project</span>
+                    </a>
+                `;
+            }
+            
+            // Populate Swiper Slides
+            const wrapper = document.getElementById('modalSwiperWrapper');
+            wrapper.innerHTML = '';
+            
+            // Normalize files key
+            const files = proj.files || (proj.file ? [proj.file] : []);
+            
+            if (files.length === 0) {
+                wrapper.innerHTML = `
+                    <div class="swiper-slide">
+                        <div class="no-preview" style="color: #94a3b8; font-size: 3rem; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-file-circle-exclamation"></i>
+                            <span style="font-size: 1rem;">No Media Available</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                files.forEach(file => {
+                    const ext = file.split('.').pop().toLowerCase();
+                    let slideContent = '';
+                    
+                    if (['jpg', 'jpeg', 'png'].includes(ext)) {
+                        slideContent = `<img src="files/${file}" alt="${proj.title}">`;
+                    } else if (ext === 'pdf') {
+                        slideContent = `<iframe src="files/${file}#toolbar=0" type="application/pdf"></iframe>`;
+                    } else {
+                        slideContent = `
+                            <div class="no-preview" style="color: #94a3b8; font-size: 3rem; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                                <i class="fa-solid fa-file-invoice"></i>
+                                <span style="font-size: 1rem;">Preview not supported</span>
+                            </div>`;
+                    }
+                    
+                    const slide = document.createElement('div');
+                    slide.className = 'swiper-slide';
+                    slide.innerHTML = slideContent;
+                    wrapper.appendChild(slide);
+                });
+            }
+            
+            // Show Modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Initialize Swiper
+            setTimeout(() => {
+                if (modalSwiper) {
+                    modalSwiper.destroy(true, true);
+                }
+                modalSwiper = new Swiper('.modal-swiper', {
+                    loop: files.length > 1,
+                    pagination: {
+                        el: '.modal-swiper .swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '.modal-swiper .swiper-button-next',
+                        prevEl: '.modal-swiper .swiper-button-prev',
+                    },
+                });
+            }, 50);
+        }
+
+        function hideProjectModal() {
+            const modal = document.getElementById('projectModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            if (modalSwiper) {
+                modalSwiper.destroy(true, true);
+                modalSwiper = null;
+            }
+        }
+
+        function closeProjectModal(event) {
+            if (event.target.id === 'projectModal') {
+                hideProjectModal();
+            }
+        }
+
+        // Close project modal on Escape key press
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                hideProjectModal();
+            }
         });
 
         // Pop-up Modal Multi-format Detection and Rendering
@@ -711,7 +996,7 @@ $role = isset($biodata['role']) ? $biodata['role'] : '';
             }
         }
 
-        // Close modal on Escape key press
+        // Close doc modal on Escape key press
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 hideDocModal();
