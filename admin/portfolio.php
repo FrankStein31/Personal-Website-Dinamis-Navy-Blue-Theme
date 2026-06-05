@@ -1,5 +1,22 @@
 <?php
 // portfolio.php - Admin CRUD Projects Portfolio
+require_once __DIR__ . '/../config.php';
+check_login();
+
+// Handle AJAX uploads/actions before layout header renders
+if (isset($_GET['action'])) {
+    if ($_GET['action'] === 'ajax_upload' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        header('Content-Type: application/json');
+        if (isset($_FILES['file'])) {
+            $upload_res = upload_file($_FILES['file'], ['jpg', 'jpeg', 'png', 'pdf']);
+            echo json_encode($upload_res);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'No file received.']);
+        }
+        exit;
+    }
+}
+
 require_once __DIR__ . '/layout_header.php';
 
 $projects = isset($db_data['portfolio']) ? $db_data['portfolio'] : [];
@@ -50,115 +67,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = trim($_POST['title']);
     $description = trim($_POST['description']);
     $link = trim($_POST['link']);
+    $uploaded_files = isset($_POST['project_files']) ? $_POST['project_files'] : [];
     
     if (empty($title)) {
         $_SESSION['error_msg'] = 'Project title is required!';
     } else {
-        $upload_error = '';
-        $uploaded_files = [];
-        
-        // Find existing project if editing
-        $existing_proj = null;
-        if ($action === 'edit' && !empty($edit_id)) {
+        if ($action === 'add') {
+            $new_proj = [
+                'id' => uniqid(),
+                'title' => $title,
+                'description' => $description,
+                'link' => $link,
+                'files' => $uploaded_files,
+                'file' => !empty($uploaded_files) ? $uploaded_files[0] : '' // legacy support
+            ];
+            $db_data['portfolio'][] = $new_proj;
+            
+            if (save_db_data($db_data)) {
+                $_SESSION['success_msg'] = 'New project added successfully!';
+                header("Location: portfolio.php");
+                exit;
+            } else {
+                $_SESSION['error_msg'] = 'Failed to save data to the database.';
+            }
+        } elseif ($action === 'edit' && !empty($edit_id)) {
+            $updated = false;
+            
+            // Get original files list to delete removed files from disk
+            $orig_files = [];
             foreach ($projects as $p) {
                 if ($p['id'] === $edit_id) {
-                    $existing_proj = $p;
                     if (!empty($p['files']) && is_array($p['files'])) {
-                        $uploaded_files = $p['files'];
+                        $orig_files = $p['files'];
                     } elseif (!empty($p['file'])) {
-                        $uploaded_files = [$p['file']];
+                        $orig_files = [$p['file']];
                     }
                     break;
                 }
             }
-        }
-        
-        // Handle deletion of selected existing files
-        if (isset($_POST['delete_existing_files']) && is_array($_POST['delete_existing_files'])) {
-            foreach ($_POST['delete_existing_files'] as $del_f) {
-                if (($key = array_search($del_f, $uploaded_files)) !== false) {
-                    unset($uploaded_files[$key]);
-                    delete_file($del_f);
-                }
-            }
-            $uploaded_files = array_values($uploaded_files); // re-index
-        }
-        
-        // Check and process new file uploads (files[] multiple)
-        if (isset($_FILES['files']) && !empty($_FILES['files']['name'][0])) {
-            $files_count = count($_FILES['files']['name']);
-            for ($i = 0; $i < $files_count; $i++) {
-                if ($_FILES['files']['error'][$i] === UPLOAD_ERR_OK) {
-                    $single_file = [
-                        'name' => $_FILES['files']['name'][$i],
-                        'type' => $_FILES['files']['type'][$i],
-                        'tmp_name' => $_FILES['files']['tmp_name'][$i],
-                        'error' => $_FILES['files']['error'][$i],
-                        'size' => $_FILES['files']['size'][$i]
-                    ];
-                    
-                    $upload_res = upload_file($single_file, ['jpg', 'jpeg', 'png', 'pdf']);
-                    
-                    if ($upload_res['success']) {
-                        $uploaded_files[] = $upload_res['filename'];
-                    } else {
-                        $upload_error = $upload_res['message'];
-                        break;
-                    }
-                } elseif ($_FILES['files']['error'][$i] !== UPLOAD_ERR_NO_FILE) {
-                    $upload_error = 'Error occurred during file upload.';
+            
+            foreach ($db_data['portfolio'] as &$proj) {
+                if ($proj['id'] === $edit_id) {
+                    $proj['title'] = $title;
+                    $proj['description'] = $description;
+                    $proj['link'] = $link;
+                    $proj['files'] = $uploaded_files;
+                    $proj['file'] = !empty($uploaded_files) ? $uploaded_files[0] : '';
+                    $updated = true;
                     break;
                 }
             }
-        }
-        
-        if (empty($upload_error)) {
-            if ($action === 'add') {
-                $new_proj = [
-                    'id' => uniqid(),
-                    'title' => $title,
-                    'description' => $description,
-                    'link' => $link,
-                    'files' => $uploaded_files,
-                    'file' => !empty($uploaded_files) ? $uploaded_files[0] : '' // legacy support
-                ];
-                $db_data['portfolio'][] = $new_proj;
-                
+            
+            if ($updated) {
                 if (save_db_data($db_data)) {
-                    $_SESSION['success_msg'] = 'New project added successfully!';
+                    // Delete any files that were removed from the project
+                    foreach ($orig_files as $f) {
+                        if (!in_array($f, $uploaded_files) && !empty($f)) {
+                            delete_file($f);
+                        }
+                    }
+                    $_SESSION['success_msg'] = 'Project updated successfully!';
                     header("Location: portfolio.php");
                     exit;
                 } else {
-                    $_SESSION['error_msg'] = 'Failed to save data to the database.';
+                    $_SESSION['error_msg'] = 'Failed to save changes to the database.';
                 }
-            } elseif ($action === 'edit' && !empty($edit_id)) {
-                $updated = false;
-                foreach ($db_data['portfolio'] as &$proj) {
-                    if ($proj['id'] === $edit_id) {
-                        $proj['title'] = $title;
-                        $proj['description'] = $description;
-                        $proj['link'] = $link;
-                        $proj['files'] = $uploaded_files;
-                        $proj['file'] = !empty($uploaded_files) ? $uploaded_files[0] : '';
-                        $updated = true;
-                        break;
-                    }
-                }
-                
-                if ($updated) {
-                    if (save_db_data($db_data)) {
-                        $_SESSION['success_msg'] = 'Project updated successfully!';
-                        header("Location: portfolio.php");
-                        exit;
-                    } else {
-                        $_SESSION['error_msg'] = 'Failed to save changes to the database.';
-                    }
-                } else {
-                    $_SESSION['error_msg'] = 'Project not found.';
-                }
+            } else {
+                $_SESSION['error_msg'] = 'Project not found.';
             }
-        } else {
-            $_SESSION['error_msg'] = $upload_error;
         }
     }
 }
@@ -210,46 +186,52 @@ if ($action === 'edit' && !empty($edit_id)) {
             </div>
             
             <div class="form-group">
-                <label for="files">Project Documents / Images (Multiple files allowed)</label>
-                <input type="file" id="files" name="files[]" class="form-control" accept="image/png, image/jpeg, image/jpg, application/pdf" multiple>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Supported formats: JPG, JPEG, PNG, PDF. You can select multiple files at once.</p>
+                <label for="file-picker">Project Documents / Images (Upload files one-by-one)</label>
+                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                    <input type="file" id="file-picker" class="form-control" accept="image/png, image/jpeg, image/jpg, application/pdf">
+                    <button type="button" id="upload-single-btn" class="btn-primary" style="white-space: nowrap;">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Upload
+                    </button>
+                </div>
+                <div id="upload-status" style="font-size: 0.85rem; display: none; margin-bottom: 15px; font-weight: 600;"></div>
                 
-                <?php 
-                $proj_files = [];
-                if ($edit_proj) {
-                    if (!empty($edit_proj['files']) && is_array($edit_proj['files'])) {
-                        $proj_files = $edit_proj['files'];
-                    } elseif (!empty($edit_proj['file'])) {
-                        $proj_files = [$edit_proj['file']];
-                    }
-                }
-                if (!empty($proj_files)): 
-                ?>
-                    <div style="margin-top: 20px;">
-                        <p style="font-size: 0.85rem; font-weight: 600; color: var(--dark); margin-bottom: 10px;">Current Attachments (Check to Delete):</p>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px;">
-                            <?php foreach ($proj_files as $f): 
-                                $ext = strtolower(pathinfo($f, PATHINFO_EXTENSION));
-                            ?>
-                                <div style="position: relative; border: 1px solid var(--border); border-radius: 8px; padding: 10px; background-color: var(--primary-light); text-align: center;">
-                                    <?php if (in_array($ext, ['jpg', 'jpeg', 'png'])): ?>
-                                        <img src="../files/<?= htmlspecialchars($f) ?>" style="width: 100%; height: 80px; object-fit: cover; border-radius: 6px; margin-bottom: 8px;">
-                                    <?php else: ?>
-                                        <div style="height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--primary); font-size: 1.8rem; margin-bottom: 8px;">
-                                            <i class="fa-solid fa-file-pdf"></i>
-                                        </div>
-                                    <?php endif; ?>
-                                    <div style="font-size: 0.75rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; color: var(--text-muted); margin-bottom: 10px; padding: 0 4px;" title="<?= htmlspecialchars($f) ?>">
-                                        <?= htmlspecialchars($f) ?>
+                <p style="font-size: 0.8rem; color: var(--text-muted);">Supported formats: JPG, JPEG, PNG, PDF. Select a file and click Upload to add it to the project files list.</p>
+                
+                <!-- Uploaded List / Previews -->
+                <div style="margin-top: 20px;">
+                    <p style="font-size: 0.85rem; font-weight: 600; color: var(--dark); margin-bottom: 10px;">Project Attachments:</p>
+                    <div id="attachments-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px;">
+                        <?php 
+                        $proj_files = [];
+                        if ($edit_proj) {
+                            if (!empty($edit_proj['files']) && is_array($edit_proj['files'])) {
+                                $proj_files = $edit_proj['files'];
+                            } elseif (!empty($edit_proj['file'])) {
+                                $proj_files = [$edit_proj['file']];
+                            }
+                        }
+                        foreach ($proj_files as $f): 
+                            $ext = strtolower(pathinfo($f, PATHINFO_EXTENSION));
+                        ?>
+                            <div class="attachment-card" data-filename="<?= htmlspecialchars($f) ?>" style="position: relative; border: 1px solid var(--border); border-radius: 8px; padding: 10px; background-color: var(--primary-light); text-align: center;">
+                                <input type="hidden" name="project_files[]" value="<?= htmlspecialchars($f) ?>">
+                                <?php if (in_array($ext, ['jpg', 'jpeg', 'png'])): ?>
+                                    <img src="../files/<?= htmlspecialchars($f) ?>" style="width: 100%; height: 80px; object-fit: cover; border-radius: 6px; margin-bottom: 8px;">
+                                <?php else: ?>
+                                    <div style="height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--primary); font-size: 1.8rem; margin-bottom: 8px;">
+                                        <i class="fa-solid fa-file-pdf"></i>
                                     </div>
-                                    <label style="display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-size: 0.75rem; color: var(--danger); cursor: pointer; font-weight: 600; width: 100%;">
-                                        <input type="checkbox" name="delete_existing_files[]" value="<?= htmlspecialchars($f) ?>"> Delete
-                                    </label>
+                                <?php endif; ?>
+                                <div style="font-size: 0.75rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; color: var(--text-muted); margin-bottom: 10px; padding: 0 4px;" title="<?= htmlspecialchars($f) ?>">
+                                    <?= htmlspecialchars($f) ?>
                                 </div>
-                            <?php endforeach; ?>
-                        </div>
+                                <button type="button" onclick="removeAttachment(this)" style="display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-size: 0.75rem; color: var(--danger); background: none; border: none; cursor: pointer; font-weight: 600; width: 100%;">
+                                    <i class="fa-solid fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                <?php endif; ?>
+                </div>
             </div>
             
             <div style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px; display: flex; justify-content: flex-end; gap: 12px;">
@@ -359,6 +341,96 @@ if ($action === 'edit' && !empty($edit_id)) {
 <?php endif; ?>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadBtn = document.getElementById('upload-single-btn');
+    const filePicker = document.getElementById('file-picker');
+    const statusDiv = document.getElementById('upload-status');
+    const container = document.getElementById('attachments-container');
+
+    if (uploadBtn) {
+        uploadBtn.addEventListener('click', function() {
+            const file = filePicker.files[0];
+            if (!file) {
+                showStatus('Please select a file first.', 'var(--danger)');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            showStatus('Uploading file, please wait...', 'var(--primary)');
+            uploadBtn.disabled = true;
+
+            fetch('portfolio.php?action=ajax_upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                uploadBtn.disabled = false;
+                if (data.success) {
+                    showStatus('File uploaded successfully! Do not forget to save the project.', 'var(--primary)');
+                    filePicker.value = ''; // Clear picker
+                    
+                    // Add card to previews
+                    addAttachmentCard(data.filename);
+                } else {
+                    showStatus('Error: ' + data.message, 'var(--danger)');
+                }
+            })
+            .catch(err => {
+                uploadBtn.disabled = false;
+                showStatus('Upload failed. Connection error.', 'var(--danger)');
+                console.error(err);
+            });
+        });
+    }
+
+    function showStatus(text, color) {
+        statusDiv.innerText = text;
+        statusDiv.style.color = color;
+        statusDiv.style.display = 'block';
+    }
+
+    function addAttachmentCard(filename) {
+        const ext = filename.split('.').pop().toLowerCase();
+        const card = document.createElement('div');
+        card.className = 'attachment-card';
+        card.setAttribute('data-filename', filename);
+        card.style.cssText = 'position: relative; border: 1px solid var(--border); border-radius: 8px; padding: 10px; background-color: var(--primary-light); text-align: center;';
+        
+        let mediaHtml = '';
+        if (['jpg', 'jpeg', 'png'].includes(ext)) {
+            mediaHtml = `<img src="../files/${filename}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 6px; margin-bottom: 8px;">`;
+        } else {
+            mediaHtml = `
+                <div style="height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--primary); font-size: 1.8rem; margin-bottom: 8px;">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+            `;
+        }
+
+        card.innerHTML = `
+            <input type="hidden" name="project_files[]" value="${filename}">
+            ${mediaHtml}
+            <div style="font-size: 0.75rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; color: var(--text-muted); margin-bottom: 10px; padding: 0 4px;" title="${filename}">
+                ${filename}
+            </div>
+            <button type="button" onclick="removeAttachment(this)" style="display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-size: 0.75rem; color: var(--danger); background: none; border: none; cursor: pointer; font-weight: 600; width: 100%;">
+                <i class="fa-solid fa-trash"></i> Delete
+            </button>
+        `;
+        container.appendChild(card);
+    }
+});
+
+function removeAttachment(button) {
+    const card = button.closest('.attachment-card');
+    if (card) {
+        card.remove();
+    }
+}
+
 function showAdminDoc(fileUrl, title) {
     const ext = fileUrl.split('.').pop().toLowerCase();
     let content = '';

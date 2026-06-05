@@ -5,13 +5,85 @@
         "description": "wasdwasdawdsda awdsadasd awdsadas",
         "photo": "6a228555b772c.png"
     },
-    "experiences": [],
+    "experiences": [
+        {
+            "id": "6a228a2f53361",
+            "company": "Polinema",
+            "position": "Anggota - Departemen Kominfo",
+            "year": "3121",
+            "description": "wadsasdasdasda"
+        },
+        {
+            "id": "6a228a381db5a",
+            "company": "Polinema",
+            "position": "Anggota - Departemen Sumber Daya Mahasiswa",
+            "year": "awsdasd",
+            "description": "awasdasdasdas"
+        },
+        {
+            "id": "6a228a2f53361",
+            "company": "Polinema",
+            "position": "Anggota - Departemen Kominfo",
+            "year": "3121",
+            "description": "wadsasdasdasda"
+        },
+        {
+            "id": "6a228a2f53361",
+            "company": "Polinema",
+            "position": "Anggota - Departemen Kominfo",
+            "year": "3121",
+            "description": "wadsasdasdasda"
+        },
+        {
+            "id": "6a228a2f53361",
+            "company": "Polinema",
+            "position": "Anggota - Departemen Kominfo",
+            "year": "3121",
+            "description": "wadsasdasdasda"
+        }
+    ],
     "certificates": [
         {
             "id": "6a2285f5667fe",
             "name": "FRANKIE STEINLIE",
             "issuer": "coba",
             "file": "6a2285f564e81.pdf"
+        },
+        {
+            "id": "6a2285f5667fe",
+            "name": "FRANKIE STEINLIE",
+            "issuer": "coba",
+            "file": "6a2285f564e81.pdf"
+        },
+        {
+            "id": "6a2285f5667fe",
+            "name": "FRANKIE STEINLIE",
+            "issuer": "coba",
+            "file": "6a2285f564e81.pdf"
+        },
+        {
+            "id": "6a2285f5667fe",
+            "name": "FRANKIE STEINLIE",
+            "issuer": "coba",
+            "file": "6a2285f564e81.pdf"
+        },
+        {
+            "id": "6a2285f5667fe",
+            "name": "FRANKIE STEINLIE",
+            "issuer": "coba",
+            "file": "6a2285f564e81.pdf"
+        },
+        {
+            "id": "6a2285f5667fe",
+            "name": "FRANKIE STEINLIE",
+            "issuer": "coba",
+            "file": "6a2285f564e81.pdf"
+        },
+        {
+            "id": "6a229b06945a6",
+            "name": "admin",
+            "issuer": "w",
+            "file": "6a229b0692950.jpeg"
         }
     ],
     "socmed": [
@@ -40,7 +112,9 @@
             "files": [
                 "6a2285ad154fe.png",
                 "6a2285b802dcc.png",
-                "6a2285beeb5f8.jpg"
+                "6a2285beeb5f8.jpg",
+                "6a2289fa141a3.png",
+                "6a228a00ae2f0.pdf"
             ],
             "file": "6a2285ad154fe.png"
         },
@@ -54,6 +128,104 @@
                 "6a228732daacc.png"
             ],
             "file": "6a228732d5e16.png"
+        },
+        {
+            "id": "6a2285a41666f",
+            "title": "awsdasd",
+            "description": "wasdaw",
+            "link": "https:\/\/frankie-steinlie.page.gd\/",
+            "files": [
+                "6a2285ad154fe.png",
+                "6a2285b802dcc.png",
+                "6a2285beeb5f8.jpg",
+                "6a2289fa141a3.png",
+                "6a228a00ae2f0.pdf"
+            ],
+            "file": "6a2285ad154fe.png"
+        },
+        {
+            "id": "6a2285a41666f",
+            "title": "awsdasd",
+            "description": "wasdaw",
+            "link": "https:\/\/frankie-steinlie.page.gd\/",
+            "files": [
+                "6a2285ad154fe.png",
+                "6a2285b802dcc.png",
+                "6a2285beeb5f8.jpg",
+                "6a2289fa141a3.png",
+                "6a228a00ae2f0.pdf"
+            ],
+            "file": "6a2285ad154fe.png"
+        },
+        {
+            "id": "6a2285a41666f",
+            "title": "awsdasd",
+            "description": "wasdaw",
+            "link": "https:\/\/frankie-steinlie.page.gd\/",
+            "files": [
+                "6a2285ad154fe.png",
+                "6a2285b802dcc.png",
+                "6a2285beeb5f8.jpg",
+                "6a2289fa141a3.png",
+                "6a228a00ae2f0.pdf"
+            ],
+            "file": "6a2285ad154fe.png"
+        },
+        {
+            "id": "6a2285a41666f",
+            "title": "awsdasd",
+            "description": "wasdaw",
+            "link": "https:\/\/frankie-steinlie.page.gd\/",
+            "files": [
+                "6a2285ad154fe.png",
+                "6a2285b802dcc.png",
+                "6a2285beeb5f8.jpg",
+                "6a2289fa141a3.png",
+                "6a228a00ae2f0.pdf"
+            ],
+            "file": "6a2285ad154fe.png"
+        },
+        {
+            "id": "6a2285a41666f",
+            "title": "awsdasd",
+            "description": "wasdaw",
+            "link": "https:\/\/frankie-steinlie.page.gd\/",
+            "files": [
+                "6a2285ad154fe.png",
+                "6a2285b802dcc.png",
+                "6a2285beeb5f8.jpg",
+                "6a2289fa141a3.png",
+                "6a228a00ae2f0.pdf"
+            ],
+            "file": "6a2285ad154fe.png"
+        },
+        {
+            "id": "6a2285a41666f",
+            "title": "awsdasd",
+            "description": "wasdaw",
+            "link": "https:\/\/frankie-steinlie.page.gd\/",
+            "files": [
+                "6a2285ad154fe.png",
+                "6a2285b802dcc.png",
+                "6a2285beeb5f8.jpg",
+                "6a2289fa141a3.png",
+                "6a228a00ae2f0.pdf"
+            ],
+            "file": "6a2285ad154fe.png"
+        },
+        {
+            "id": "6a2285a41666f",
+            "title": "awsdasd",
+            "description": "wasdaw",
+            "link": "https:\/\/frankie-steinlie.page.gd\/",
+            "files": [
+                "6a2285ad154fe.png",
+                "6a2285b802dcc.png",
+                "6a2285beeb5f8.jpg",
+                "6a2289fa141a3.png",
+                "6a228a00ae2f0.pdf"
+            ],
+            "file": "6a2285ad154fe.png"
         }
     ]
 }
